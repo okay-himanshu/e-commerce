@@ -21,27 +21,53 @@ class UserController {
             });
           } else {
             res.json({
-              status: "failed to signup",
+              status: "failed",
               message: "password and confirm password doesn't match",
             });
           }
         } else {
           return res.json({
-            status: "failed to signup",
+            status: "failed",
             message: "email already existed please login",
           });
         }
       } else {
         res.json({
-          status: "failed to signup",
+          status: "failed",
           message: "all input filed is required.",
         });
       }
     } catch (error) {
       res.json({
-        status: "something went wrong. failed to signup",
-        message: error.message,
+        status: "failed",
+        message: "something went wrong. failed to signup " + error.message,
       });
+    }
+  }
+
+  static async Login(req, res) {
+    const { email, password } = req.body;
+
+    try {
+      if (email && password) {
+        const user = await UserModel.findOne({ email });
+
+        if (!user)
+          return res.json({ status: "failed", message: "user not found" });
+
+        if (email === user.email && password === user.password) {
+          res.json({ status: "success", message: "logged in successfully" });
+        } else {
+          res.json({
+            status: "failed",
+            message: "email and password doesn't match",
+          });
+        }
+      } else {
+        return res.json({ status: "failed", message: "all filed is required" });
+      }
+    } catch {
+      res.json({ status: "failed", message: "something went wrong" });
     }
   }
 }
