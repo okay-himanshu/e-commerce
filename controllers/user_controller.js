@@ -1,5 +1,7 @@
-const bcrypt = require("bcrypt");
 const UserModel = require("../models/user_model");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const JWT_SECRET_KEY = require("../config/env_config").JWT_SECRET_KEY;
 
 class UserController {
   static async userSignUp(req, res) {
@@ -19,9 +21,19 @@ class UserController {
             });
 
             await createdUser.save();
+            const savedUser = await UserModel.findOne({ email });
+
+            // generating JWT token
+
+            // in mongodb id is saved as _id
+            const token = jwt.sign({ userId: savedUser._id }, JWT_SECRET_KEY, {
+              expiresIn: "5d",
+            });
+
             res.json({
               status: "success",
               message: "user signup successfully",
+              token: token,
             });
           } catch (error) {
             res.json({
@@ -60,9 +72,14 @@ class UserController {
         if (user) {
           const isMatch = await bcrypt.compare(password, user.password);
           if (email === user.email && isMatch) {
+            // creating JWT TOKEN
+            const token = jwt.sign({ userId: user._id }, JWT_SECRET_KEY, {
+              expiresIn: "5d",
+            });
             res.json({
               status: "success",
               message: "logged in successfully",
+              token: token,
             });
           } else {
             res.json({
