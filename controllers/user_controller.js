@@ -1,73 +1,92 @@
+const bcrypt = require("bcrypt");
 const UserModel = require("../models/user_model");
 
 class UserController {
-  static async SignUp(req, res) {
-    try {
-      const { name, email, password, confirmPassword } = req.body;
-      if (name && email && password && confirmPassword) {
-        const checkExistedUser = await UserModel.findOne({ email });
-        if (!checkExistedUser) {
-          if (password === confirmPassword) {
+  static async userSignUp(req, res) {
+    const { name, email, password, confirmPassword } = req.body;
+    if (name && email && password && confirmPassword) {
+      const checkExistedUser = await UserModel.findOne({ email });
+      if (!checkExistedUser) {
+        if (password === confirmPassword) {
+          try {
+            const salt = await bcrypt.genSalt(12);
+            const hashPassword = await bcrypt.hash(password, salt);
+
             const createdUser = new UserModel({
               name: name,
               email: email,
-              password: password,
+              password: hashPassword,
             });
 
-            const savedUser = await createdUser.save();
+            await createdUser.save();
             res.json({
               status: "success",
               message: "user signup successfully",
             });
-          } else {
+          } catch (error) {
             res.json({
               status: "failed",
-              message: "password and confirm password doesn't match",
+              message:
+                "something went wrong. failed to signup " + error.message,
             });
           }
         } else {
-          return res.json({
+          res.json({
             status: "failed",
-            message: "email already existed please login",
+            message: "password and confirm password doesn't match",
           });
         }
       } else {
-        res.json({
+        return res.json({
           status: "failed",
-          message: "all input filed is required.",
+          message: "email already existed please login",
         });
       }
-    } catch (error) {
+    } else {
       res.json({
         status: "failed",
-        message: "something went wrong. failed to signup " + error.message,
+        message: "all input filed is required.",
       });
     }
   }
 
-  static async Login(req, res) {
+  static async userLogin(req, res) {
     const { email, password } = req.body;
 
     try {
       if (email && password) {
         const user = await UserModel.findOne({ email });
 
-        if (!user)
-          return res.json({ status: "failed", message: "user not found" });
-
-        if (email === user.email && password === user.password) {
-          res.json({ status: "success", message: "logged in successfully" });
+        if (user) {
+          const isMatch = await bcrypt.compare(password, user.password);
+          if (email === user.email && isMatch) {
+            res.json({
+              status: "success",
+              message: "logged in successfully",
+            });
+          } else {
+            res.json({
+              status: "failed",
+              message: "email and password doesn't match",
+            });
+          }
         } else {
-          res.json({
+          return res.json({
             status: "failed",
-            message: "email and password doesn't match",
+            message: "user not found",
           });
         }
       } else {
-        return res.json({ status: "failed", message: "all filed is required" });
+        return res.json({
+          status: "failed",
+          message: "all filed is required",
+        });
       }
     } catch {
-      res.json({ status: "failed", message: "something went wrong" });
+      res.json({
+        status: "failed",
+        message: "something went wrong",
+      });
     }
   }
 }
