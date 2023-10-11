@@ -106,6 +106,36 @@ class UserController {
       });
     }
   }
+
+  static async changeUserPassword(req, res) {
+    const { password, confirmPassword } = req.body;
+    if (password && confirmPassword) {
+      if (password === confirmPassword) {
+        const salt = await bcrypt.genSalt(12);
+        const hashPassword = await bcrypt.hash(password, salt);
+        await UserModel.findByIdAndUpdate(req.user._id, {
+          $set: {
+            password: hashPassword,
+          },
+        });
+
+        res.json({
+          status: "success",
+          message: "Password changed successfully",
+        });
+      } else {
+        res.json({
+          status: "failed",
+          message: "new password and confirm new password doesn't match",
+        });
+      }
+    } else {
+      res.json({
+        status: "failed",
+        message: "All fields required",
+      });
+    }
+  }
 }
 
 module.exports = UserController;
