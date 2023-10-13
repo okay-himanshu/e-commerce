@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { Home, Page404 } from "../src/pages";
-import { Navbar } from "../src/components";
+import { Home, Page404 } from "../pages";
+import { Navbar } from "../components";
 
 function Router() {
   return (

@@ -23,11 +23,11 @@ function Navbar() {
           </div>
         </div>
         <div
-          className={`flex items-around items-center gap-5 mr-10 bg-color_black flex-col absolute top-0 -right-10 h-screen   p-3  ${
+          className={`z-50 absolute  top-0 right-0 items-center gap-5 mr-10 bg-color_black flex-col h-screen p-3  ${
             toggle
-              ? "translate-x-80 duration-200 transition-all"
-              : "translate-x-0 duration-200 transition-all"
-          }  md:h-full md:p-0 md:translate-x-0  md:flex-row md:relative md:bg-color_black`}
+              ? "translate-x-80 duration-200 transition-transform"
+              : "translate-x-0 duration-200 transition-transform"
+          } md:flex md:h-full md:p-0 md:translate-x-0  md:flex-row md:relative md:bg-color_black`}
         >
           <div className="flex flex-col md:flex-row items-center justify-center gap-2 text-color_white text-base">
             <NavLink to="/">Home</NavLink>
