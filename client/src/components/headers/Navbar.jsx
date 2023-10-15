@@ -1,17 +1,17 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { BiCart, BiMenuAltRight } from "react-icons/bi";
 import { IoCloseSharp } from "react-icons/io5";
 import { GrFormSearch } from "react-icons/gr";
 
-import Button from "../Button";
-import { Search } from "../index";
+import { Button, Search } from "../index";
 import { arrow } from "../../svgs";
 
 function Navbar() {
   const [toggle, setToggle] = useState(false);
-
   const handleToggle = () => setToggle(!toggle);
+  const navigate = useNavigate();
+  const navigator = (url) => navigate(url);
 
   return (
     <div className="bg-color_black p-3">
@@ -52,6 +52,7 @@ function Navbar() {
             />
             <Button
               title={"Signup"}
+              handleClick={() => navigator("/signup")}
               className="text-color_secondary bg-color_white hover:text-color_secondary_light duration-150"
             />
           </div>

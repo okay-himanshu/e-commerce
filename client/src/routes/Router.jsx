@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { Home, Page404 } from "../pages";
-import { Navbar } from "../components";
+import { Navbar, SignUp } from "../components";
 
 function Router() {
   return (
@@ -10,6 +10,7 @@ function Router() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />}></Route>
+          <Route path="/signup" element={<SignUp />}></Route>
           <Route path="*" element={<Page404 />}></Route>
         </Routes>
       </BrowserRouter>

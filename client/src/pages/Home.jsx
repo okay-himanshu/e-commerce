@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
 
-import { Hero } from "../components/index";
+import { Hero, SignUp } from "../components/index";
 import { hero1, hero2, hero3 } from "../images/index";
 
 function Home() {
