@@ -48,6 +48,7 @@ function Navbar() {
             </div>
             <Button
               title={"Login"}
+              handleClick={() => navigator("/login")}
               className="text-color_secondary bg-color_white hover:text-color_secondary_light duration-150"
             />
             <Button
