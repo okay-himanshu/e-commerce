@@ -29,31 +29,31 @@ async function userSignUp(req, res) {
           });
 
           res.json({
-            status: true,
+            success: true,
             message: "user signup successfully",
             token: token,
           });
         } catch (error) {
           res.json({
-            status: false,
+            success: false,
             message: "something went wrong. failed to signup " + error.message,
           });
         }
       } else {
         res.json({
-          status: false,
+          success: false,
           message: "password and confirm password doesn't match",
         });
       }
     } else {
       return res.json({
-        status: false,
+        success: false,
         message: "email already existed please login",
       });
     }
   } else {
     res.json({
-      status: false,
+      success: false,
       message: "all input filed is required.",
     });
   }
@@ -74,31 +74,31 @@ async function userLogin(req, res) {
             expiresIn: "5d",
           });
           res.json({
-            status: true,
+            success: true,
             message: "logged in successfully",
             token: token,
           });
         } else {
           res.json({
-            status: false,
+            success: false,
             message: "email and password doesn't match",
           });
         }
       } else {
         return res.json({
-          status: false,
+          success: false,
           message: "user not found",
         });
       }
     } else {
       return res.json({
-        status: false,
+        success: false,
         message: "all filed is required",
       });
     }
   } catch {
     res.json({
-      status: false,
+      success: false,
       message: "something went wrong",
     });
   }
@@ -117,18 +117,18 @@ async function changeUserPassword(req, res) {
       });
 
       res.json({
-        status: "success",
+        success: "success",
         message: "Password changed successfully",
       });
     } else {
       res.json({
-        status: "failed",
+        success: "failed",
         message: "new password and confirm new password doesn't match",
       });
     }
   } else {
     res.json({
-      status: "failed",
+      success: "failed",
       message: "All fields required",
     });
   }
