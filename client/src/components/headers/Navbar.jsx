@@ -6,12 +6,29 @@ import { GrFormSearch } from "react-icons/gr";
 
 import { Button, Search } from "../index";
 import { arrow } from "../../svgs";
+import { useAuth } from "../../contexts/auth";
 
 function Navbar() {
   const [toggle, setToggle] = useState(false);
   const handleToggle = () => setToggle(!toggle);
   const navigate = useNavigate();
   const navigator = (url) => navigate(url);
+
+  const [auth, setAuth] = useAuth();
+
+  const handleLogout = () => {
+    const logoutConfirmation = confirm("do u really want to logout?");
+    if (logoutConfirmation) {
+      setAuth({
+        ...auth,
+        user: null,
+        token: "",
+      });
+      localStorage.removeItem("auth");
+    } else {
+      return;
+    }
+  };
 
   return (
     <div className="bg-color_black p-3">
@@ -46,16 +63,28 @@ function Navbar() {
                 className="absolute right-0 h-full bg-color_primary "
               />
             </div>
-            <Button
-              title={"Login"}
-              handleClick={() => navigator("/login")}
-              className="text-color_secondary bg-color_white hover:text-color_secondary_light duration-150"
-            />
-            <Button
-              title={"Signup"}
-              handleClick={() => navigator("/signup")}
-              className="text-color_secondary bg-color_white hover:text-color_secondary_light duration-150"
-            />
+            {!auth.user ? (
+              <>
+                <Button
+                  title={"Login"}
+                  handleClick={() => navigator("/login")}
+                  className="text-color_secondary bg-color_white hover:text-color_secondary_light duration-150"
+                />
+                <Button
+                  title={"Signup"}
+                  handleClick={() => navigator("/signup")}
+                  className="text-color_secondary bg-color_white hover:text-color_secondary_light duration-150"
+                />
+              </>
+            ) : (
+              <>
+                <Button
+                  title={"Logout"}
+                  handleClick={handleLogout}
+                  className="text-color_secondary bg-color_white hover:text-color_secondary_light duration-150"
+                />
+              </>
+            )}
           </div>
           <div className="text-color_white cursor-pointer bg-color_white p-2 rounded-sm relative">
             <BiCart

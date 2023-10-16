@@ -6,10 +6,13 @@ import { Button, CustomTitle } from "./";
 import { Input } from "./Input";
 import { login } from "../svgs";
 import env_config from "../config/env_config";
+import { useAuth } from "../contexts/auth";
 
 const Login = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [auth, setAuth] = useAuth();
+
   const navigate = useNavigate();
   const API_ENDPOINT = env_config.VITE_API_ENDPOINTS;
 
@@ -22,6 +25,12 @@ const Login = () => {
       });
       if (res.data.success) {
         alert(res.data.message);
+        setAuth({
+          ...auth,
+          user: res.data.user,
+          token: res.data.token,
+        });
+        localStorage.setItem("auth", JSON.stringify(res.data));
         navigate("/home");
       } else {
         alert(res.data.message);
@@ -30,6 +39,12 @@ const Login = () => {
       console.log(err);
     }
   };
+
+  // preventing user to access login page when user is already logged in
+  React.useEffect(() => {
+    const auth = localStorage.getItem("auth");
+    if (auth) navigate("/");
+  }, []);
 
   return (
     <>

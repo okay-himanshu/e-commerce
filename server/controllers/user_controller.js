@@ -14,24 +14,22 @@ async function userSignUp(req, res) {
           const salt = await bcrypt.genSalt(12);
           const hashPassword = await bcrypt.hash(password, salt);
 
-          const createdUser = new UserModel({
-            name: name,
-            email: email,
+          const user = new UserModel({
+            name,
+            email,
             password: hashPassword,
-          });
-
-          const savedUser = await createdUser.save();
+          }).save();
 
           // generating JWT token
           // in mongodb id is saved as _id
-          const token = jwt.sign({ userId: savedUser._id }, JWT_SECRET_KEY, {
+          const token = jwt.sign({ userId: user._id }, JWT_SECRET_KEY, {
             expiresIn: "5d",
           });
-
           res.json({
             success: true,
             message: "user signup successfully",
-            token: token,
+            token,
+            user,
           });
         } catch (error) {
           res.json({
@@ -77,6 +75,10 @@ async function userLogin(req, res) {
             success: true,
             message: "logged in successfully",
             token: token,
+            user: {
+              name: user.name,
+              email: user.email,
+            },
           });
         } else {
           res.json({

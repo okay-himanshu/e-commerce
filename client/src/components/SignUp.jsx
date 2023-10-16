@@ -36,6 +36,11 @@ const SignUp = () => {
     }
   };
 
+  React.useEffect(() => {
+    const auth = localStorage.getItem("auth");
+    if (auth) navigate("/");
+  }, []);
+
   return (
     <>
       <div className="flex justify-center">
