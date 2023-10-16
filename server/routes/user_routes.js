@@ -3,6 +3,7 @@ const {
   userSignUp,
   userLogin,
   changeUserPassword,
+  userForgetPassword,
   test,
 } = require("../controllers/user_controller");
 
@@ -14,6 +15,7 @@ const router = express.Router();
 // public routes
 router.post("/signup", userSignUp);
 router.post("/login", userLogin);
+router.post("/forget-password", userForgetPassword);
 
 // protected routes
 router.post("/change-password", checkUserAuth, changeUserPassword);

@@ -4,8 +4,8 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET_KEY = require("../config/env_config").JWT_SECRET_KEY;
 
 async function userSignUp(req, res) {
-  const { name, email, password, confirmPassword } = req.body;
-  if (name && email && password && confirmPassword) {
+  const { name, email, question, password, confirmPassword } = req.body;
+  if (name && email && question && password && confirmPassword) {
     const checkExistedUser = await UserModel.findOne({ email });
     if (!checkExistedUser) {
       if (password === confirmPassword) {
@@ -14,9 +14,10 @@ async function userSignUp(req, res) {
           const salt = await bcrypt.genSalt(12);
           const hashPassword = await bcrypt.hash(password, salt);
 
-          const user = new UserModel({
+          const user = await new UserModel({
             name,
             email,
+            question,
             password: hashPassword,
           }).save();
 
@@ -29,7 +30,10 @@ async function userSignUp(req, res) {
             success: true,
             message: "user signup successfully",
             token,
-            user,
+            user: {
+              name: user.name,
+              email: user.email,
+            },
           });
         } catch (error) {
           res.json({
@@ -136,6 +140,48 @@ async function changeUserPassword(req, res) {
   }
 }
 
+async function userForgetPassword(req, res) {
+  try {
+    const { email, question, password } = req.body;
+
+    if (email && question && password) {
+      const user = await UserModel.findOne({ email: email });
+      if (user) {
+        if (question === user.question) {
+          // hashing password
+          const salt = await bcrypt.genSalt(12);
+          const hashPassword = await bcrypt.hash(password, salt);
+          user.password = hashPassword;
+          await user.save();
+
+          return res.json({ matched: true });
+        } else {
+          res.json({
+            success: false,
+            message: "answer isn't matched",
+          });
+        }
+      } else {
+        res.json({
+          success: false,
+          message: "email is not registered",
+        });
+      }
+    } else {
+      res.json({
+        success: false,
+        message: "All fields required",
+      });
+    }
+  } catch (err) {
+    res.json({
+      success: false,
+      message: "something went wrong",
+      error: err,
+    });
+  }
+}
+
 async function test(req, res) {
   res.send({
     message: "welcome to protected route",
@@ -146,5 +192,6 @@ module.exports = {
   userSignUp,
   userLogin,
   changeUserPassword,
+  userForgetPassword,
   test,
 };
