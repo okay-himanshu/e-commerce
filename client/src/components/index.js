@@ -6,5 +6,16 @@ import Hero from "./Hero";
 import SignUp from "./SignUp";
 import Login from "./Login";
 import CustomTitle from "./CustomTitle";
+import Loader from "./loader";
 
-export { Button, Navbar, Footer, Search, Hero, SignUp, Login, CustomTitle };
+export {
+  Button,
+  Navbar,
+  Footer,
+  Search,
+  Hero,
+  SignUp,
+  Login,
+  CustomTitle,
+  Loader,
+};

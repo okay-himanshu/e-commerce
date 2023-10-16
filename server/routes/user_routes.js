@@ -18,5 +18,8 @@ router.post("/login", userLogin);
 // protected routes
 router.post("/change-password", checkUserAuth, changeUserPassword);
 router.get("/test", checkUserAuth, isAdmin, test);
+router.get("/user-auth", checkUserAuth, (req, res) => {
+  res.status(200).send({ ok: true });
+});
 
 module.exports = router;

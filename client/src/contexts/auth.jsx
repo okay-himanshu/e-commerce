@@ -1,12 +1,22 @@
 import React from "react";
+import axios from "axios";
 
 const AuthContext = React.createContext();
 
+import env_config from "../config/env_config";
+
 const AuthProvider = ({ children }) => {
+  const API_ENDPOINT = env_config.VITE_API_ENDPOINTS;
+
   const [auth, setAuth] = React.useState({
     user: null,
     token: "",
   });
+
+  // default headers
+  // React.useEffect(() => {
+  //   axios.defaults.headers.common["Authorization"] = auth?.token;
+  // }, [auth.token]);
 
   React.useEffect(() => {
     const data = localStorage.getItem("auth");
@@ -20,10 +30,8 @@ const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  console.log(auth);
-
   return (
-    <AuthContext.Provider value={[auth, setAuth]}>
+    <AuthContext.Provider value={[auth, setAuth, API_ENDPOINT]}>
       {children}
     </AuthContext.Provider>
   );
