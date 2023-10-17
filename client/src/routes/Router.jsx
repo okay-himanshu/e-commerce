@@ -1,8 +1,19 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { Home, Page404, Dashboard } from "../pages";
+import {
+  Home,
+  Page404,
+  Dashboard,
+  AdminDashBoard,
+  CreateCategory,
+  CreateProducts,
+  Users,
+  Profile,
+  Orders,
+} from "../pages";
 import { Navbar, SignUp, Login, ForgetPassword } from "../components";
 import Private from "../routes/Private";
+import AdminRoute from "./AdminRoute";
 
 function Router() {
   return (
@@ -18,7 +29,21 @@ function Router() {
 
           {/* protected route */}
           <Route path="/dashboard" element={<Private />}>
-            <Route path="" element={<Dashboard />}></Route>
+            <Route path="user" element={<Dashboard />}></Route>
+            <Route path="user/profile" element={<Profile />}></Route>
+            <Route path="user/orders" element={<Orders />}></Route>
+          </Route>
+          <Route path="/dashboard" element={<AdminRoute />}>
+            <Route path="admin" element={<AdminDashBoard />}></Route>
+            <Route
+              path="admin/create-category"
+              element={<CreateCategory />}
+            ></Route>
+            <Route
+              path="admin/create-products"
+              element={<CreateProducts />}
+            ></Route>
+            <Route path="admin/users" element={<Users />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>

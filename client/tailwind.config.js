@@ -16,7 +16,7 @@ export default {
     colors: {
       color_black: "#232525", // black
       color_white: "#f9fcfa", // white
-      color_gray: "#979ea6", // gray
+      color_gray: "#f2eeed", // gray
       color_primary: "#3501e9", // violet
       color_secondary: "#f60354", // pink
       color_secondary_light: "#eab4be", // light pink

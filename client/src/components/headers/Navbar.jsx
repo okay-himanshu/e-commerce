@@ -3,6 +3,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { BiCart, BiMenuAltRight } from "react-icons/bi";
 import { IoCloseSharp } from "react-icons/io5";
 import { GrFormSearch } from "react-icons/gr";
+import { HiUser } from "react-icons/hi";
+import { IoIosArrowDown } from "react-icons/io";
 
 import { Button, Search } from "../index";
 import { arrow } from "../../svgs";
@@ -10,7 +12,11 @@ import { useAuth } from "../../contexts/auth";
 
 function Navbar() {
   const [toggle, setToggle] = useState(false);
+  const [dropDown, setDropDown] = useState(false);
+
   const handleToggle = () => setToggle(!toggle);
+  const handleDropDownMenu = () => setDropDown(!dropDown);
+
   const navigate = useNavigate();
   const navigator = (url) => navigate(url);
 
@@ -25,6 +31,7 @@ function Navbar() {
         token: "",
       });
       localStorage.removeItem("auth");
+      navigate("/");
     } else {
       return;
     }
@@ -52,7 +59,7 @@ function Navbar() {
 
             <div className=" ml-5 w-[1px]  bg-color_white "></div>
           </div>
-          <div className="flex flex-col md:flex-row gap-2">
+          <div className="flex flex-col md:flex-row gap-5">
             <div className="flex relative">
               <Search
                 placeholder="search"
@@ -62,6 +69,15 @@ function Navbar() {
                 icon={<GrFormSearch size={25} className="text-color_white" />}
                 className="absolute right-0 h-full bg-color_primary "
               />
+            </div>
+            <div className="text-color_white cursor-pointer bg-color_white p-2 rounded-sm relative">
+              <BiCart
+                fontSize={25}
+                className="text-color_secondary hover:text-color_secondary_light duration-200"
+              />
+              <div className="absolute -top-3 -right-3 bg-color_secondary p-t-0.5 pb-0.5 pr-2 pl-2  rounded-full">
+                0
+              </div>
             </div>
             {!auth.user ? (
               <>
@@ -78,24 +94,46 @@ function Navbar() {
               </>
             ) : (
               <>
-                <Button
-                  title={"Logout"}
-                  handleClick={handleLogout}
-                  className="text-color_secondary bg-color_white hover:text-color_secondary_light duration-150"
-                />
+                <div
+                  className=" relative flex items-center  border border-color_white rounded-lg cursor-pointer"
+                  onClick={handleDropDownMenu}
+                >
+                  <HiUser size={30} className="text-color_white" />
+
+                  <div
+                    className={`shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] text-center absolute top-12 -right-10 transition-transform duration-100 ${
+                      dropDown ? "hidden" : "visible"
+                    }`}
+                  >
+                    <div className="pr-4 pl-4 pt-2 pb-2 text-color_secondary">
+                      <div className="pt-2 pb-2 hover:text-color_secondary_light">
+                        Profile
+                      </div>
+                      <hr />
+                      <div className="pt-2 pb-2 hover:text-color_secondary_light">
+                        <NavLink
+                          to={`/dashboard/${
+                            auth?.user?.role === 1 ? "admin" : "user"
+                          }`}
+                        >
+                          DashBoard
+                        </NavLink>
+                      </div>
+                      <hr />
+                      <div
+                        className="pt-2 pb-2 hover:text-color_secondary_light"
+                        onClick={handleLogout}
+                      >
+                        Logout
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </>
             )}
           </div>
-          <div className="text-color_white cursor-pointer bg-color_white p-2 rounded-sm relative">
-            <BiCart
-              fontSize={25}
-              className="text-color_secondary hover:text-color_secondary_light duration-200"
-            />
-            <div className="absolute -top-3 -right-3 bg-color_secondary p-t-0.5 pb-0.5 pr-2 pl-2  rounded-full">
-              0
-            </div>
-          </div>
         </div>
+
         <div
           className=" md:hidden z-20 flex items-center cursor-pointer"
           onClick={handleToggle}

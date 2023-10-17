@@ -9,6 +9,8 @@ import CustomTitle from "./CustomTitle";
 import Loader from "./loader";
 import ForgetPassword from "./ForgetPassword";
 import Input from "./Input";
+import AdminMenu from "./AdminMenu";
+import UserMenu from "./UserMenu";
 
 export {
   Button,
@@ -22,4 +24,6 @@ export {
   Loader,
   ForgetPassword,
   Input,
+  AdminMenu,
+  UserMenu,
 };
