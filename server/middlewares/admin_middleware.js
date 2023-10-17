@@ -1,8 +1,9 @@
 const UserModel = require("../models/user_model");
 const isAdmin = async (req, res, next) => {
   try {
-    const id = req.user.id;
-    const user = await UserModel.findOne(id);
+    const id = req.user;
+    const user = await UserModel.findOne({ _id: id });
+
     if (user.role !== 1) {
       res.json({
         success: false,
