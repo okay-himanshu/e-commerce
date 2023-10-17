@@ -4,8 +4,9 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET_KEY = require("../config/env_config").JWT_SECRET_KEY;
 
 async function userSignUp(req, res) {
-  const { name, email, question, password, confirmPassword } = req.body;
-  if (name && email && question && password && confirmPassword) {
+  console.log(req.body);
+  const { name, email, securityQuestion, password, confirmPassword } = req.body;
+  if (name && email && securityQuestion && password && confirmPassword) {
     const checkExistedUser = await UserModel.findOne({ email });
     if (!checkExistedUser) {
       if (password === confirmPassword) {
@@ -17,7 +18,7 @@ async function userSignUp(req, res) {
           const user = await new UserModel({
             name,
             email,
-            question,
+            securityQuestion,
             password: hashPassword,
           }).save();
 
@@ -142,41 +143,49 @@ async function changeUserPassword(req, res) {
 
 async function userForgetPassword(req, res) {
   try {
-    const { email, question, password } = req.body;
+    const { email, securityQuestion, newPassword, confirmNewPassword } =
+      req.body;
 
-    if (email && question && password) {
+    if (email && securityQuestion && newPassword && confirmNewPassword) {
       const user = await UserModel.findOne({ email: email });
       if (user) {
-        if (question === user.question) {
-          // hashing password
-          const salt = await bcrypt.genSalt(12);
-          const hashPassword = await bcrypt.hash(password, salt);
-          user.password = hashPassword;
-          await user.save();
+        if (securityQuestion === user.securityQuestion) {
+          if (newPassword === confirmNewPassword) {
+            // Hashing newPassword, not password
+            const salt = await bcrypt.genSalt(12);
+            const hashPassword = await bcrypt.hash(newPassword, salt);
+            user.password = hashPassword;
+            await user.save();
 
-          return res.json({ matched: true });
+            return res.json({ matched: true });
+          } else {
+            res.json({
+              success: false,
+              message: "Passwords do not match, please try again.",
+            });
+          }
         } else {
           res.json({
             success: false,
-            message: "answer isn't matched",
+            message: "Answer doesn't match the security question.",
           });
         }
       } else {
         res.json({
           success: false,
-          message: "email is not registered",
+          message: "Email is not registered.",
         });
       }
     } else {
       res.json({
         success: false,
-        message: "All fields required",
+        message: "All fields are required.",
       });
     }
   } catch (err) {
     res.json({
       success: false,
-      message: "something went wrong",
+      message: "Something went wrong",
       error: err,
     });
   }

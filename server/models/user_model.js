@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    question: {
+    securityQuestion: {
       type: String,
       required: true,
     },
