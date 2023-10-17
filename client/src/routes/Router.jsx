@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { Home, Page404, Dashboard } from "../pages";
-import { Navbar, SignUp, Login } from "../components";
+import { Navbar, SignUp, Login, ForgetPassword } from "../components";
 import Private from "../routes/Private";
 
 function Router() {
@@ -13,6 +13,7 @@ function Router() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/login" element={<Login />}></Route>
+          <Route path="/forget-password" element={<ForgetPassword />}></Route>
           <Route path="*" element={<Page404 />}></Route>
 
           {/* protected route */}

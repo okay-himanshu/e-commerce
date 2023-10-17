@@ -1,9 +1,8 @@
 import React from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-import { Button, CustomTitle } from "./";
-import { Input } from "./Input";
+import { Button, CustomTitle, Input } from "./";
 import { login } from "../svgs";
 import env_config from "../config/env_config";
 import { useAuth } from "../contexts/auth";
@@ -70,12 +69,23 @@ const Login = () => {
             handleChange={(event) => setPassword(event.target.value)}
             placeholder={"password"}
           />
-
           <Button
             title="LOGIN"
             handleClick={userLogin}
             className="font-semibold bg-color_secondary text-color_white w-full mt-5 hover:scale-105 duration-100 transition-transform"
           />
+          <div className="flex justify-center mt-3 text-sm text-color_primary ">
+            <Link to="/forget-password">Forgot password ?</Link>
+          </div>
+
+          <div className="border flex justify-center mt-5 p-2  ">
+            <div to="/forget-password">
+              Don't have an account?{" "}
+              <Link to="/signup" className="text-color_primary">
+                Signup
+              </Link>
+            </div>
+          </div>
         </form>
       </div>
     </>

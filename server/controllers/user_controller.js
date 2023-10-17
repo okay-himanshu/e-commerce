@@ -157,7 +157,11 @@ async function userForgetPassword(req, res) {
             user.password = hashPassword;
             await user.save();
 
-            return res.json({ matched: true });
+            return res.json({
+              success: true,
+              message:
+                "password reset successfully , now login with your new password",
+            });
           } else {
             res.json({
               success: false,

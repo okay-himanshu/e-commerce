@@ -7,6 +7,8 @@ import SignUp from "./SignUp";
 import Login from "./Login";
 import CustomTitle from "./CustomTitle";
 import Loader from "./loader";
+import ForgetPassword from "./ForgetPassword";
+import Input from "./Input";
 
 export {
   Button,
@@ -18,4 +20,6 @@ export {
   Login,
   CustomTitle,
   Loader,
+  ForgetPassword,
+  Input,
 };
