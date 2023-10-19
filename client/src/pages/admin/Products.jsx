@@ -40,8 +40,11 @@ function Products() {
         <div>
           <h1>PRODUCTS</h1>
           {products.map((product) => (
-            <Link to={`/product/${product.slug}`}>
-              <div key={product._id} className="max-w-sm product-card border">
+            <Link
+              to={`/dashboard/admin/product/${product.slug}`}
+              key={product._id}
+            >
+              <div className="max-w-sm product-card border">
                 <a href="#" className="flex justify-center">
                   <img
                     className="rounded-t-lg"

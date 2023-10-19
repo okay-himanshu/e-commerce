@@ -45,7 +45,7 @@ function CreateProducts() {
 
       const { data } = await axios.post(
         `${API_ENDPOINT}/api/v1/product/create-product`,
-        productData, // Send the FormData directly
+        productData,
         {
           headers: {
             Authorization: `Bearer ${auth?.token}`,
