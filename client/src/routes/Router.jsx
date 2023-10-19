@@ -33,6 +33,8 @@ function Router() {
             <Route path="user/profile" element={<Profile />}></Route>
             <Route path="user/orders" element={<Orders />}></Route>
           </Route>
+
+          {/* admin route */}
           <Route path="/dashboard" element={<AdminRoute />}>
             <Route path="admin" element={<AdminDashBoard />}></Route>
             <Route
@@ -45,6 +47,7 @@ function Router() {
             ></Route>
             <Route path="admin/users" element={<Users />}></Route>
           </Route>
+          {/*  */}
         </Routes>
       </BrowserRouter>
     </>
