@@ -7,6 +7,7 @@ import AdminDashBoard from "./admin/AdminDashBoard";
 import CreateCategory from "./admin/CreateCategory";
 import CreateProducts from "./admin/CreateProducts";
 import Users from "./admin/Users";
+import Products from "./admin/Products";
 
 // user
 import Profile from "./user/Profile";
@@ -22,4 +23,5 @@ export {
   Users,
   Profile,
   Orders,
+  Products,
 };

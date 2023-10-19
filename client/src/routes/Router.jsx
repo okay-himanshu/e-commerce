@@ -10,6 +10,7 @@ import {
   Users,
   Profile,
   Orders,
+  Products,
 } from "../pages";
 import { Navbar, SignUp, Login, ForgetPassword } from "../components";
 import Private from "../routes/Private";
@@ -45,6 +46,7 @@ function Router() {
               path="admin/create-products"
               element={<CreateProducts />}
             ></Route>
+            <Route path="admin/products" element={<Products />}></Route>
             <Route path="admin/users" element={<Users />}></Route>
           </Route>
           {/*  */}

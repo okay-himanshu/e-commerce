@@ -24,6 +24,12 @@ function AdminMenu() {
         >
           Users
         </NavLink>
+        <NavLink
+          to={"/dashboard/admin/products"}
+          className="border border-t-0 p-2 hover:bg-color_gray transition-colors duration-75 "
+        >
+          Products
+        </NavLink>
       </div>
     </>
   );
