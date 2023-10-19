@@ -8,6 +8,7 @@ export default function Input({
   className = "",
   value,
   handleChange,
+  accept,
 }) {
   return (
     <div className="flex flex-col">
@@ -19,6 +20,7 @@ export default function Input({
         value={value}
         onChange={handleChange}
         className={`${className} p-1.5 border mt-1 mb-1 rounded-[3px] w-96`}
+        accept={accept}
       />
     </div>
   );

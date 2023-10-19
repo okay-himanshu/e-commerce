@@ -6,67 +6,69 @@ const ProductModel = require("../models/product_model");
 // create products
 async function createProductController(req, res) {
   try {
-    // getting all data from formidableMiddleware instead of req.body
+    // Getting all data from formidableMiddleware instead of req.body
     const { name, slug, description, price, category, quantity, shipping } =
       req.fields;
-    const { image } = req.files; // getting the file
+    const { image } = req.files; // Getting the file
 
-    // validation
-
-    switch (true) {
-      case !name:
-        return res.status(400).send({
-          success: false,
-          message: "name is required",
-        });
-      case !description:
-        return res.status(400).send({
-          success: false,
-          message: "description is required",
-        });
-      case !price:
-        return res.status(400).send({
-          success: false,
-          message: "price is required",
-        });
-      case !category:
-        return res.status(400).send({
-          success: false,
-          message: "category is required",
-        });
-      case !quantity:
-        return res.status(400).send({
-          success: false,
-          message: "quantity is required",
-        });
-      case image && image.size > 1000000:
-        return res.status(400).send({
-          success: false,
-          message: "image is required and should be less than 1mb",
-        });
+    // Validation
+    if (!name) {
+      return res.status(400).send({
+        success: false,
+        message: "Product name is required",
+      });
+    }
+    if (!description) {
+      return res.status(400).send({
+        success: false,
+        message: "Product description is required",
+      });
+    }
+    if (!price) {
+      return res.status(400).send({
+        success: false,
+        message: "Product price is required",
+      });
+    }
+    if (!category) {
+      return res.status(400).send({
+        success: false,
+        message: "Category is required",
+      });
+    }
+    if (!quantity) {
+      return res.status(400).send({
+        success: false,
+        message: "Product quantity is required",
+      });
+    }
+    if (image && image.size > 1000000) {
+      return res.status(400).send({
+        success: false,
+        message: "Image is required and should be less than 1MB",
+      });
     }
 
-    const products = new ProductModel({ ...req.fields, slug: slugify(name) });
+    const product = new ProductModel({ ...req.fields, slug: slugify(name) });
 
     if (image) {
-      products.image.data = fs.readFileSync(image.path);
-      products.image.contentType = image.type;
+      product.image.data = fs.readFileSync(image.path);
+      product.image.contentType = image.type;
     }
 
-    await products.save();
+    await product.save();
 
     return res.status(201).send({
       success: true,
-      message: "product created successfully",
-      products,
+      message: "Product created successfully",
+      product,
     });
-    //
   } catch (err) {
-    console.log(err);
-    return res.status(400).send({
+    console.error(err);
+    return res.status(500).send({
       success: false,
-      message: "error while creating product",
-      err,
+      message: "Error while creating the product",
+      error: err.message,
     });
   }
 }
