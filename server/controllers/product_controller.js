@@ -301,6 +301,31 @@ async function productListController(req, res) {
     });
   }
 }
+
+async function relatedProductController(req, res) {
+  try {
+    const { pid, cid } = req.params;
+    const products = await ProductModel.find({
+      category: cid,
+      _id: { $ne: pid },
+    })
+      .select("-photo")
+      .limit(3)
+      .populate("category");
+    res.status(200).send({
+      success: true,
+      message: "Got related products successfully",
+      products,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(400).send({
+      success: false,
+      message: "Failed while getting related products",
+    });
+  }
+}
+
 module.exports = {
   createProductController,
   updateProductController,
@@ -311,4 +336,5 @@ module.exports = {
   productFilterController,
   productCountController,
   productListController,
+  relatedProductController,
 };
