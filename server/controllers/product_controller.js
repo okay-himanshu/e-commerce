@@ -259,6 +259,48 @@ async function productFilterController(req, res) {
     });
   }
 }
+
+async function productCountController(req, res) {
+  try {
+    const total = await ProductModel.find({}).estimatedDocumentCount();
+    res.status(200).send({
+      success: true,
+      message: "got product count successfully",
+      total,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(400).send({
+      success: false,
+      message: "failed while getting product count",
+      err,
+    });
+  }
+}
+
+async function productListController(req, res) {
+  try {
+    const perPage = 10;
+    const page = req.params.page ? req.params.page : 1;
+    const products = await ProductModel.find({})
+      .select("-image")
+      .skip((page - 1) * perPage)
+      .limit(perPage)
+      .sort({ createdAt: -1 });
+    res.status(200).send({
+      success: true,
+      message: "got products successfully",
+      products,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(400).send({
+      success: false,
+      message: "failed while getting product count",
+      err,
+    });
+  }
+}
 module.exports = {
   createProductController,
   updateProductController,
@@ -267,4 +309,6 @@ module.exports = {
   productImageController,
   deleteProductController,
   productFilterController,
+  productCountController,
+  productListController,
 };
