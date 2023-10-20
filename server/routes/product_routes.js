@@ -11,6 +11,7 @@ const {
   getSingleProductController,
   productImageController,
   deleteProductController,
+  productFilterController,
 } = require("../controllers/product_controller");
 
 const router = express.Router();
@@ -51,5 +52,7 @@ router.delete(
   isAdmin,
   deleteProductController
 );
+
+router.post("/filter-products", productFilterController);
 
 module.exports = router;

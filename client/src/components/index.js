@@ -11,6 +11,7 @@ import ForgetPassword from "./ForgetPassword";
 import Input from "./Input";
 import AdminMenu from "./AdminMenu";
 import UserMenu from "./UserMenu";
+import Prices from "./Prices";
 
 export {
   Button,
@@ -26,4 +27,5 @@ export {
   Input,
   AdminMenu,
   UserMenu,
+  Prices,
 };

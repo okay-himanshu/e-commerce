@@ -237,6 +237,28 @@ async function deleteProductController(req, res) {
   }
 }
 
+async function productFilterController(req, res) {
+  try {
+    const { checked, selectedPrice } = req.body;
+    let args = {};
+    if (checked.length > 0) args.category = checked;
+    if (selectedPrice.length)
+      args.price = { $gte: selectedPrice[0], $lte: selectedPrice[1] };
+    const products = await ProductModel.find(args);
+    res.status(200).send({
+      success: true,
+      message: "got products successfully",
+      products,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(400).send({
+      success: false,
+      message: "failed while filtering product",
+      err,
+    });
+  }
+}
 module.exports = {
   createProductController,
   updateProductController,
@@ -244,4 +266,5 @@ module.exports = {
   getSingleProductController,
   productImageController,
   deleteProductController,
+  productFilterController,
 };
