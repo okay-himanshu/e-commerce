@@ -6,9 +6,10 @@ import { GrFormSearch } from "react-icons/gr";
 import { HiUser } from "react-icons/hi";
 import { IoIosArrowDown } from "react-icons/io";
 
-import { Button, Search } from "../index";
-import { arrow } from "../../svgs";
-import { useAuth } from "../../contexts/auth";
+import { Button, Search } from "./index";
+import { arrow } from "../svgs";
+import { useAuth } from "../contexts/auth";
+import { useCart } from "../contexts/cart";
 
 function Navbar() {
   const [toggle, setToggle] = useState(false);
@@ -21,6 +22,7 @@ function Navbar() {
   const navigator = (url) => navigate(url);
 
   const [auth, setAuth] = useAuth();
+  const [cart] = useCart();
 
   const handleLogout = () => {
     const logoutConfirmation = confirm("do u really want to logout?");
@@ -70,13 +72,16 @@ function Navbar() {
                 className="absolute right-0 h-full bg-color_primary "
               />
             </div>
-            <div className="text-color_white cursor-pointer bg-color_white p-2 rounded-sm relative">
+            <div
+              className="text-color_white cursor-pointer bg-color_white p-2 rounded-sm relative"
+              onClick={() => navigator("/cart")}
+            >
               <BiCart
                 fontSize={25}
                 className="text-color_secondary hover:text-color_secondary_light duration-200"
               />
               <div className="absolute -top-3 -right-3 bg-color_secondary p-t-0.5 pb-0.5 pr-2 pl-2  rounded-full">
-                0
+                {cart?.length}
               </div>
             </div>
             {!auth.user ? (

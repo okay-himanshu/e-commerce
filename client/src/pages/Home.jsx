@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Button, Hero, SignUp, Prices } from "../components/index";
 import { hero1, hero2, hero3 } from "../images/index";
 import { useAuth } from "../contexts/auth";
+import { useCart } from "../contexts/cart";
 
 function Home() {
   const [images] = useState([hero1, hero2, hero3]);
@@ -18,6 +19,8 @@ function Home() {
   // const [page, setPage] = useState(1);
 
   const [auth, , API_ENDPOINT] = useAuth();
+  const [cart, setCart] = useCart();
+
   const navigate = useNavigate();
 
   let timeoutId;
@@ -146,6 +149,19 @@ function Home() {
     }
   };
 
+  // add to cart
+
+  const addToCart = (product) => {
+    if (auth?.token) {
+      setCart([...cart, product]);
+      localStorage.setItem("cart", JSON.stringify([...cart, product]));
+      alert("product added to cart");
+    } else {
+      alert("login/signup to add to cart");
+      navigate("/signup");
+    }
+  };
+
   const resetFilter = () => {
     window.location.reload();
   };
@@ -233,6 +249,7 @@ function Home() {
                   />
                   <Button
                     title={"Add to cart"}
+                    handleClick={() => addToCart(product)}
                     className="bg-color_primary text-color_white"
                   />
                 </div>

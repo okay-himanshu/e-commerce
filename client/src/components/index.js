@@ -1,6 +1,5 @@
 import Button from "./Button";
-import Navbar from "./headers/Navbar";
-import Footer from "./footer/Footer";
+import Navbar from "./Navbar";
 import Search from "./Search";
 import Hero from "./Hero";
 import SignUp from "./SignUp";
@@ -16,7 +15,6 @@ import Prices from "./Prices";
 export {
   Button,
   Navbar,
-  Footer,
   Search,
   Hero,
   SignUp,

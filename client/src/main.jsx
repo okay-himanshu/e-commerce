@@ -5,9 +5,12 @@ import "./index.css";
 import "./App.css";
 import App from "./App";
 import { AuthProvider } from "./contexts/auth";
+import { CartProvider } from "./contexts/cart";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <AuthProvider>
-    <App />
+    <CartProvider>
+      <App />
+    </CartProvider>
   </AuthProvider>
 );

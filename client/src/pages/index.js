@@ -3,6 +3,7 @@ import Page404 from "./Page404";
 import Dashboard from "./user/Dashboard";
 import AdminDashBoard from "./admin/AdminDashBoard";
 import ProductDetails from "./ProductDetails";
+import CartPage from "./CartPage";
 
 // admin
 import CreateCategory from "./admin/CreateCategory";
@@ -28,4 +29,5 @@ export {
   Products,
   UpdateProduct,
   ProductDetails,
+  CartPage,
 };

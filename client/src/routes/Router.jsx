@@ -13,6 +13,7 @@ import {
   Products,
   UpdateProduct,
   ProductDetails,
+  CartPage,
 } from "../pages";
 import { Navbar, SignUp, Login, ForgetPassword } from "../components";
 import Private from "../routes/Private";
@@ -29,6 +30,7 @@ function Router() {
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/forget-password" element={<ForgetPassword />}></Route>
+          <Route path="/cart" element={<CartPage />}></Route>
           <Route path="*" element={<Page404 />}></Route>
 
           {/* protected route */}
