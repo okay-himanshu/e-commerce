@@ -12,6 +12,7 @@ import {
   Orders,
   Products,
   UpdateProduct,
+  ProductDetails,
 } from "../pages";
 import { Navbar, SignUp, Login, ForgetPassword } from "../components";
 import Private from "../routes/Private";
@@ -24,6 +25,7 @@ function Router() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />}></Route>
+          <Route path="/product/:slug" element={<ProductDetails />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/forget-password" element={<ForgetPassword />}></Route>

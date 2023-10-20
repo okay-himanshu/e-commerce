@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import { Button, Hero, SignUp, Prices } from "../components/index";
 import { hero1, hero2, hero3 } from "../images/index";
@@ -17,6 +18,7 @@ function Home() {
   // const [page, setPage] = useState(1);
 
   const [auth, , API_ENDPOINT] = useAuth();
+  const navigate = useNavigate();
 
   let timeoutId;
 
@@ -227,6 +229,7 @@ function Home() {
                   <Button
                     title={"view more "}
                     className="bg-color_secondary text-color_white"
+                    handleClick={() => navigate(`/product/${product.slug}`)}
                   />
                   <Button
                     title={"Add to cart"}

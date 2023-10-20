@@ -2,6 +2,7 @@ import Home from "./Home";
 import Page404 from "./Page404";
 import Dashboard from "./user/Dashboard";
 import AdminDashBoard from "./admin/AdminDashBoard";
+import ProductDetails from "./ProductDetails";
 
 // admin
 import CreateCategory from "./admin/CreateCategory";
@@ -26,4 +27,5 @@ export {
   Orders,
   Products,
   UpdateProduct,
+  ProductDetails,
 };
