@@ -13,6 +13,8 @@ function Home() {
   const [categories, setCategories] = useState([]);
   const [checked, setChecked] = useState([]);
   const [selectedPrice, setSelectedPrice] = useState([]);
+  // const [total, setTotal] = useState(0);
+  // const [page, setPage] = useState(1);
 
   const [auth, , API_ENDPOINT] = useAuth();
 
@@ -103,8 +105,27 @@ function Home() {
     setSelectedPrice(value);
   };
 
-  // get filtered product
+  // // get total count
+  // const getTotal = async () => {
+  //   try {
+  //     const { data } = await axios.get(
+  //       `${API_ENDPOINT}/api/v1/product/product-count`
+  //     );
+  //     console.log(data);
+  //     if (data) {
+  //       setTotal(data?.total);
+  //     }
+  //   } catch (err) {
+  //     console.log(err.message);
+  //     alert("Something went wrong: " + err.message);
+  //   }
+  // };
 
+  // useEffect(() => {
+  //   getTotal();
+  // }, []);
+  //
+  // get filtered product
   const filterProducts = async () => {
     try {
       const { data } = await axios.post(
@@ -126,6 +147,7 @@ function Home() {
   const resetFilter = () => {
     window.location.reload();
   };
+
   return (
     <>
       {/* <div className="relative selection:select-none ">
@@ -140,6 +162,7 @@ function Home() {
           <MdArrowForwardIos size={40} className="text-color_white" />
         </div>
       </div> */}
+
       <div className="flex">
         <div className="w-80">
           <h1>Filters By Categories</h1>
