@@ -9,8 +9,6 @@ import { useAuth } from "../contexts/auth";
 import { useCart } from "../contexts/cart";
 
 function Home() {
-  const [images] = useState([hero1, hero2, hero3]);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [checked, setChecked] = useState([]);
@@ -22,29 +20,6 @@ function Home() {
   const [cart, setCart] = useCart();
 
   const navigate = useNavigate();
-
-  let timeoutId;
-
-  const handleForward = () => {
-    clearTimeout(timeoutId);
-    setCurrentImageIndex((currentImageIndex + 1) % images.length);
-  };
-
-  const handleBack = () => {
-    clearTimeout(timeoutId);
-    setCurrentImageIndex(
-      (currentImageIndex - 1 + images.length) % images.length
-    );
-  };
-
-  useEffect(() => {
-    timeoutId = setTimeout(() => {
-      handleForward();
-    }, 5000);
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [currentImageIndex]);
 
   const getAllCategories = async () => {
     try {
@@ -168,18 +143,7 @@ function Home() {
 
   return (
     <>
-      {/* <div className="relative selection:select-none ">
-        <Hero image={images[currentImageIndex]} />
-        <div className="absolute top-1/2 cursor-pointer" onClick={handleBack}>
-          <MdArrowBackIosNew size={40} className="text-color_white" />
-        </div>
-        <div
-          className="absolute right-0 top-1/2 cursor-pointer"
-          onClick={handleForward}
-        >
-          <MdArrowForwardIos size={40} className="text-color_white" />
-        </div>
-      </div> */}
+      <Hero />
 
       <div className="flex">
         <div className="w-80">

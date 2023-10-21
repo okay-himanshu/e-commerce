@@ -126,7 +126,7 @@ function Navbar() {
                         <div className="sm:flex sm:gap-4">
                           <Button
                             title="Login"
-                            className="bgTeal"
+                            className="bgRed"
                             handleClick={() => navigator("/login")}
                           />
 

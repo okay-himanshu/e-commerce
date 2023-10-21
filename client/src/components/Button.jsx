@@ -5,7 +5,7 @@ function Button({ title, handleClick, className = "", icon }) {
     bgTeal:
       "rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow",
     bgGray:
-      "rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600",
+      "rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-red-600",
     bgRed:
       "rounded-md bg-red-600 px-5 py-2.5 text-sm font-medium text-white shadow",
     bgGreen:
@@ -14,7 +14,7 @@ function Button({ title, handleClick, className = "", icon }) {
       "rounded-md bg-orange-600 px-5 py-2.5 text-sm font-medium text-white shadow",
   };
 
-  const buttonClass = classNames[className] || classNames.bgTeal;
+  const buttonClass = classNames[className] || classNames.bgRed;
 
   return (
     <button onClick={handleClick} className={buttonClass}>
