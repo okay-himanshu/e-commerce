@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, NavLink } from "react-router-dom";
 
 import { Button, CustomTitle, Input } from "./";
 import env_config from "../config/env_config";
@@ -43,10 +43,7 @@ const SignUp = () => {
 
   return (
     <>
-      <div className="flex justify-center">
-        <CustomTitle title={"SIGNUP"} />
-      </div>
-      <div className="flex justify-center items-center  ">
+      {/* <div className="flex justify-center items-center  ">
         <form onSubmit={handleSubmit}>
           <Input
             htmlFor="name"
@@ -103,8 +100,117 @@ const SignUp = () => {
             </div>
           </div>
         </form>
-        {/* <img src={signup} alt="" className="w-[30rem] ml-10" /> */}
-      </div>
+      </div> */}
+
+      <main className=" flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
+        <div className="max-w-xl lg:max-w-3xl ">
+          <h1 className="mt-6 text-2xl font-bold text-gray-600 sm:text-3xl md:text-4xl">
+            SIGNUP
+          </h1>
+
+          <form
+            className="mt-8 grid grid-cols-6 gap-6 "
+            onSubmit={handleSubmit}
+          >
+            <div className="col-span-6 sm:col-span-3">
+              <label
+                htmlFor="FirstName"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Name
+              </label>
+
+              <Input
+                type={"text"}
+                className=" focus:border-slate-600"
+                placeholder={"marvin allen"}
+                handleChange={(event) => setName(event.target.value)}
+              />
+            </div>
+            <div className="col-span-6 sm:col-span-3">
+              <label
+                htmlFor="FirstName"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Email
+              </label>
+
+              <Input
+                type={"email"}
+                className=" focus:border-slate-600"
+                placeholder={"7Yx4A@example.com"}
+                handleChange={(event) => setEmail(event.target.value)}
+              />
+            </div>
+
+            <div className="col-span-6">
+              <label
+                htmlFor="securityQuestion"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Security Question
+              </label>
+
+              <Input
+                type="text"
+                className=" focus:border-slate-600"
+                placeholder={"what's your favorite color / animal / book?"}
+                handleChange={(event) =>
+                  setSecurityQuestion(event.target.value)
+                }
+              />
+            </div>
+
+            <div className="col-span-6 sm:col-span-3">
+              <label
+                htmlFor="Password"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Password
+              </label>
+
+              <Input
+                type="password"
+                className=" focus:border-slate-600"
+                placeholder={"*********"}
+                handleChange={(event) => setPassword(event.target.value)}
+              />
+            </div>
+
+            <div className="col-span-6 sm:col-span-3">
+              <label
+                htmlFor="PasswordConfirmation"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Password Confirmation
+              </label>
+
+              <Input
+                type="password"
+                placeholder={"*********"}
+                className=" focus:border-slate-600"
+                handleChange={(event) => setConfirmPassword(event.target.value)}
+              />
+            </div>
+
+            <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
+              <Button
+                title={"Create an account"}
+                className="bgGreen"
+                handleClick={userSignUp}
+              />
+
+              <p className="mt-4 text-sm text-gray-500 sm:mt-0">
+                Already have an account?
+                <NavLink to="/login" className="text-color_primary">
+                  {" "}
+                  Login
+                </NavLink>
+              </p>
+            </div>
+          </form>
+        </div>
+      </main>
     </>
   );
 };
