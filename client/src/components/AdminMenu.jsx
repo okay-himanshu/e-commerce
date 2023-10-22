@@ -1,36 +1,112 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 
 function AdminMenu() {
+  const navigate = useNavigate();
+
+  const [isScreenAboveMd, setIsScreenAboveMd] = useState(
+    window.innerWidth > 768
+  );
+
+  useEffect(() => {
+    function handleResize() {
+      setIsScreenAboveMd(window.innerWidth > 768);
+    }
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const handleOptionChange = (event) => {
+    const selectedValue = event.target.value;
+    if (selectedValue === "createCategory") {
+      navigate("/dashboard/admin/create-category");
+    } else if (selectedValue === "createProduct") {
+      navigate("/dashboard/admin/create-products");
+    } else if (selectedValue === "users") {
+      navigate("/dashboard/admin/users");
+    } else if (selectedValue === "products") {
+      navigate("/dashboard/admin/products");
+    }
+  };
+
   return (
     <>
-      <div className="flex flex-col text-center ">
-        <h1 className="text-2xl">Admin Panel</h1>
-        <NavLink
-          to={"/dashboard/admin/create-category"}
-          className="border-b-0 border p-2 hover:bg-color_gray  transition-colors duration-75 "
+      <ul
+        className={
+          isScreenAboveMd ? "flex sm:flex-col" : "flex-col hidden  md:flex"
+        }
+      >
+        <li>
+          <NavLink
+            to={"/dashboard/admin/create-category"}
+            className={({ isActive }) =>
+              isActive
+                ? "flex items-center gap-2 border-s-[1px] border-blue-500 bg-blue-50 px-4 py-3 text-blue-700"
+                : "flex items-center gap-2 border-blue-500  px-4 py-3 text-gray-500 hover:border-gray-100 hover:bg-gray-50 hover:text-gray-700"
+            }
+          >
+            <span className="text-sm font-medium"> Create Category </span>
+          </NavLink>
+        </li>
+
+        <li>
+          <NavLink
+            to={"/dashboard/admin/create-products"}
+            className={({ isActive }) =>
+              isActive
+                ? "flex items-center gap-2 border-s-[1px] border-blue-500 bg-blue-50 px-4 py-3 text-blue-700"
+                : "flex items-center gap-2 border-blue-500  px-4 py-3 text-gray-500 hover:border-gray-100 hover-bg-gray-50 hover-text-gray-700"
+            }
+          >
+            <span className="text-sm font-medium"> Create Product </span>
+          </NavLink>
+        </li>
+
+        <li>
+          <NavLink
+            to={"/dashboard/admin/users"}
+            className={({ isActive }) =>
+              isActive
+                ? "flex items-center gap-2 border-s-[1px] border-blue-500 bg-blue-50 px-4 py-3 text-blue-700"
+                : "flex items-center gap-2 border-blue-500  px-4 py-3 text-gray-500 hover:border-gray-100 hover-bg-gray-50 hover-text-gray-700"
+            }
+          >
+            <span className="text-sm font-medium"> Users </span>
+          </NavLink>
+        </li>
+
+        <li>
+          <NavLink
+            to={"/dashboard/admin/products"}
+            className={({ isActive }) =>
+              isActive
+                ? "flex items-center gap-2 border-s-[1px] border-blue-500 bg-blue-50 px-4 py-3 text-blue-700"
+                : "flex items-center gap-2 border-blue-500  px-4 py-3 text-gray-500 hover:border-gray-100 hover-bg-gray-50 hover-text-gray-700"
+            }
+          >
+            <span className="text-sm font-medium"> Products </span>
+          </NavLink>
+        </li>
+      </ul>
+
+      {!isScreenAboveMd && (
+        <select
+          name="HeadlineAct"
+          id="HeadlineAct"
+          className="border mt-1.5 w-52 sm:w-full p-2 rounded-md border-gray-300 text-gray-700 sm:text-sm outline-none"
+          onChange={handleOptionChange}
         >
-          Create Category
-        </NavLink>
-        <NavLink
-          to={"/dashboard/admin/create-products"}
-          className="border p-2 hover:bg-color_gray  transition-colors duration-75 "
-        >
-          Create Products
-        </NavLink>
-        <NavLink
-          to={"/dashboard/admin/users"}
-          className="border border-t-0 p-2 hover:bg-color_gray transition-colors duration-75 "
-        >
-          Users
-        </NavLink>
-        <NavLink
-          to={"/dashboard/admin/products"}
-          className="border border-t-0 p-2 hover:bg-color_gray transition-colors duration-75 "
-        >
-          Products
-        </NavLink>
-      </div>
+          <option value="">Please select</option>
+          <option value="createCategory">Create Category</option>
+          <option value="createProduct">Create Product</option>
+          <option value="users">Users</option>
+          <option value="products">Products</option>
+        </select>
+      )}
     </>
   );
 }

@@ -19,7 +19,7 @@ export default function Input({
         required
         value={value}
         onChange={handleChange}
-        className={`${className} p-1.5 border mt-1 mb-1 rounded-[3px] w-96`}
+        className={`${className} mt-1  rounded-md border-gray-200 shadow-sm sm:text-sm p-[10px] border focus:outline-none  `}
         accept={accept}
       />
     </div>
