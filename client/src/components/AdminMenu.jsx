@@ -94,18 +94,20 @@ function AdminMenu() {
       </ul>
 
       {!isScreenAboveMd && (
-        <select
-          name="HeadlineAct"
-          id="HeadlineAct"
-          className="border mt-1.5 w-52 sm:w-full p-2 rounded-md border-gray-300 text-gray-700 sm:text-sm outline-none"
-          onChange={handleOptionChange}
-        >
-          <option value="">Please select</option>
-          <option value="createCategory">Create Category</option>
-          <option value="createProduct">Create Product</option>
-          <option value="users">Users</option>
-          <option value="products">Products</option>
-        </select>
+        <>
+          <select
+            name="HeadlineAct"
+            id="HeadlineAct"
+            className="border mt-1.5 text-center p-2 rounded-md border-gray-300 text-gray-700 sm:text-sm outline-none"
+            onChange={handleOptionChange}
+          >
+            <option value="">Please select</option>
+            <option value="createCategory">Create Category</option>
+            <option value="createProduct">Create Product</option>
+            <option value="users">Users</option>
+            <option value="products">Products</option>
+          </select>
+        </>
       )}
     </>
   );
