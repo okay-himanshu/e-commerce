@@ -84,7 +84,7 @@ function CreateCategory() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row m-10 text-center justify-center gap-5 items-center">
+    <div className="flex flex-col md:flex-row m-10 text-center justify-center gap-5 ">
       <div className="w-96 ">
         <AdminMenu />
       </div>

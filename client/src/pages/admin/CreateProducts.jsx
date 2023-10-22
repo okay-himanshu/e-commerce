@@ -67,12 +67,12 @@ function CreateProducts() {
 
   return (
     <>
-      <div className="flex m-10 text-center ">
-        <div className="mr-5 w-72">
+      <div className="flex flex-col md:flex-row m-10 text-center justify-center gap-5  ">
+        <div className="w-96">
           <AdminMenu />
         </div>
-        <form onSubmit={handleCreateProduct}>
-          <div className="ml-5">
+        <form onSubmit={handleCreateProduct} className="w-full max-w-screen-xl">
+          <div className="ml-5 ">
             <div>MANAGE PRODUCTS</div>
 
             <div className="mt-2">
@@ -85,15 +85,7 @@ function CreateProducts() {
                 handleChange={(e) => setName(e.target.value)}
               />
             </div>
-            <div className="mt-2">
-              <textarea
-                className="block p-1.5 w-full h-20 text-gray-900 bg-gray-50 rounded-sm border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Product description"
-                htmlFor="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              ></textarea>
-            </div>
+
             <div className="mt-2">
               <Input
                 type="number"
@@ -116,11 +108,25 @@ function CreateProducts() {
             </div>
 
             <div className="mt-2">
+              <textarea
+                rows={4}
+                className="mt-2 w-full p-2  rounded-md border-gray-200 align-top shadow-sm sm:text-sm border outline-none"
+                placeholder="Product description"
+                htmlFor="description"
+                value={description}
+                required
+                onChange={(e) => setDescription(e.target.value)}
+              ></textarea>
+            </div>
+
+            <div className="mt-2">
               <select
-                className="bg-gray-50 border border-gray-300 text-gray-900 rounded-sm w-full p-1.5"
+                className=" border border-gray-200  rounded-md text-sm  w-full p-2 outline-none"
                 onChange={(e) => setSelectedCategoryId(e.target.value)}
               >
-                <option value="">Select category</option>
+                <option value="" className="text-gray-300">
+                  Select category
+                </option>
                 {categories?.map((category) => (
                   <option key={category._id} value={category._id}>
                     {category.name}
@@ -139,11 +145,13 @@ function CreateProducts() {
               />
             </div>
 
-            <Button
-              title={"Create Product"}
-              className="mt-2 bg-color_secondary text-color_white font-bold"
-              handleClick={handleCreateProduct}
-            />
+            <div className="mt-5 pb-20">
+              <Button
+                title={"Create Product"}
+                className="bgGreen"
+                handleClick={handleCreateProduct}
+              />
+            </div>
           </div>
         </form>
       </div>
