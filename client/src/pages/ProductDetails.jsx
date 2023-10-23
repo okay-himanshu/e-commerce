@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { AiOutlineStar } from "react-icons/ai";
+import { FaOpencart } from "react-icons/fa";
 
 import { useAuth } from "../contexts/auth";
 import { Button } from "../components";
@@ -49,30 +51,57 @@ function ProductDetails() {
 
   return (
     <>
-      <div className="flex justify-center m-10">
-        <div className="w-80 border">
+      <div className=" flex items-center justify-center flex-col sm:flex-row bg-white m-2 p-2 rounded-md  md:gap-10 ">
+        <div>
           <img
-            className="rounded-t-lg"
             src={`${API_ENDPOINT}/api/v1/product/product-image/${product._id}`}
-            alt={product.name}
+            alt={product?.name}
+            className="p-6 w-80 sm:w-96 md:w-[30rem] rounded-t-lg object-contain"
           />
         </div>
-        <div>
-          <h1 className="text-3xl">PRODUCT DETAILS</h1>
-          <h1>Name: {product.name}</h1>
-          <h1>Description: {product.description}</h1>
-          <h1>Price: {product.price}</h1>
-          {/* <h1>Category: {product.category.name}</h1> */}
-          <Button
-            title="ADD TO CART"
-            className="bg-color_secondary text-color_white"
-          />
-          <Button
-            title="BUY NOW"
-            className="bg-color_primary text-color_white"
-          />
+        <div className="text-gray-600 md:w-[30rem] ">
+          <h1 className="font-bold text-4xl capitalize ">{product?.name}</h1>
+          <div className="bg-gray-600 w-20 h-[2px] mt-2 mb-2 rounded-full"></div>
+          <p className="text-gray-600">₹ {product?.price}</p>
+          <div className="flex items-center text-gray-400">
+            <AiOutlineStar />
+            <AiOutlineStar />
+            <AiOutlineStar />
+            <AiOutlineStar />
+            <AiOutlineStar />
+            <p className="text-gray-500 ml-2">0 reviews</p>
+          </div>
+          <p>{product?.description}</p>
+
+          <div className="mt-4 flex justify-between">
+            <p>Category</p>
+            <p>{product?.category?.name}</p>
+          </div>
+          <div className="flex justify-between">
+            <p>Quantity</p>
+            <p>{product?.quantity}</p>
+          </div>
+
+          <div className="flex justify-between">
+            <p>Shipping</p>
+            <p>Free</p>
+          </div>
+          <div className="flex justify-between">
+            <p>Return</p>
+            <p>30 days</p>
+          </div>
+          <div className="flex justify-between">
+            <p>Availability</p>
+            <p>In stock</p>
+          </div>
+
+          <button className="uppercase w-full bg-green-600 hover:bg-green-700 duration-100 text-white rounded-md hover:scale-105 p-2.5 mt-4 mb-4">
+            Add To Cart
+          </button>
         </div>
       </div>
+      <hr />
+
       <div>
         <h1>SIMILAR PRODUCTS</h1>
         <div className="overflow-x-scroll flex">
