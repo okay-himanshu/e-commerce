@@ -32,7 +32,7 @@ const SignUp = () => {
         alert(res.data.message);
       }
     } catch (err) {
-      console.log(err);
+      alert("error", err);
     }
   };
 

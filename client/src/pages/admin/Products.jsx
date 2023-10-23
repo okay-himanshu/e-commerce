@@ -17,9 +17,6 @@ function Products() {
       );
       if (data.success) {
         setProducts(data.products);
-        console.log("Got all products successfully");
-      } else {
-        console.log("Some error occurred:", data.message);
       }
     } catch (err) {
       console.error(err);

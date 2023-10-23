@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET_KEY = require("../config/env_config").JWT_SECRET_KEY;
 
 async function userSignUp(req, res) {
-  console.log(req.body);
   const { name, email, securityQuestion, password, confirmPassword } = req.body;
   if (name && email && securityQuestion && password && confirmPassword) {
     const checkExistedUser = await UserModel.findOne({ email });

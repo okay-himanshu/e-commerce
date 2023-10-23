@@ -11,6 +11,7 @@ import Input from "./Input";
 import AdminMenu from "./AdminMenu";
 import UserMenu from "./UserMenu";
 import Prices from "./Prices";
+import Filters from "./Filters";
 
 export {
   Button,
@@ -26,4 +27,5 @@ export {
   AdminMenu,
   UserMenu,
   Prices,
+  Filters,
 };

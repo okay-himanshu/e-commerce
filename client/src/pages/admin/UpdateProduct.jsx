@@ -82,7 +82,6 @@ function UpdateProduct() {
         alert("Some error", data?.message);
       }
     } catch (err) {
-      console.log(err.response.data);
       alert("Some error", err?.message);
     }
   };
@@ -104,7 +103,6 @@ function UpdateProduct() {
         alert("Some error", data?.message);
       }
     } catch (err) {
-      console.log(err.response.data);
       alert("Some error", err?.message);
     }
   };

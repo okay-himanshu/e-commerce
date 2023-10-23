@@ -137,7 +137,6 @@ async function updateProductController(req, res) {
     });
     //
   } catch (err) {
-    console.log(err);
     return res.status(400).send({
       success: false,
       message: "error while creating product",
@@ -163,7 +162,6 @@ async function getProductsController(req, res) {
       products,
     });
   } catch (err) {
-    console.log(err);
     return res.status(400).send({
       success: false,
       message: "error while getting products",
@@ -193,7 +191,6 @@ async function getSingleProductController(req, res) {
       });
     }
   } catch (err) {
-    console.log(err);
     res.status(400).send({
       success: false,
       message: "failed while getting single product",
@@ -206,12 +203,11 @@ async function productImageController(req, res) {
   try {
     const { pid } = req.params;
     const product = await ProductModel.findById(pid).select("image");
-    if (product.image.data) {
+    if (product.image?.data) {
       res.set("Content-Type", product.image.contentType);
       return res.status(200).send(product.image.data);
     }
   } catch (err) {
-    console.log(err);
     res.status(400).send({
       success: false,
       message: "failed while getting product image",
@@ -228,7 +224,6 @@ async function deleteProductController(req, res) {
       message: "product deleted successfully",
     });
   } catch (err) {
-    console.log(err);
     res.status(400).send({
       success: false,
       message: "failed while deleting product",
@@ -251,7 +246,6 @@ async function productFilterController(req, res) {
       products,
     });
   } catch (err) {
-    console.log(err);
     res.status(400).send({
       success: false,
       message: "failed while filtering product",
@@ -269,7 +263,6 @@ async function productCountController(req, res) {
       total,
     });
   } catch (err) {
-    console.log(err);
     res.status(400).send({
       success: false,
       message: "failed while getting product count",
@@ -293,7 +286,6 @@ async function productListController(req, res) {
       products,
     });
   } catch (err) {
-    console.log(err);
     res.status(400).send({
       success: false,
       message: "failed while getting product count",

@@ -41,10 +41,10 @@ function Navbar() {
           <div className="flex h-16 items-center ">
             <div className="flex-1 md:flex md:items-center md:gap-12">
               <NavLink
-                className="block text-teal-600 text-xl font-medium"
+                className="block  text-xl font-bold uppercase text-red-600"
                 to="/"
               >
-                TrendTribe
+                Trend_Tribe_
               </NavLink>
             </div>
 
@@ -165,7 +165,9 @@ function Navbar() {
                               </strong>
 
                               <NavLink
-                                to="/"
+                                to={`/dashboard/${
+                                  auth?.user?.role === 1 ? "admin" : "user"
+                                }`}
                                 className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                                 role="menuitem"
                               >
@@ -173,7 +175,9 @@ function Navbar() {
                               </NavLink>
                               <NavLink
                                 to={`/dashboard/${
-                                  auth?.user?.role === 1 ? "admin" : "user"
+                                  auth?.user?.role === 1
+                                    ? "admin/create-category"
+                                    : "user"
                                 }`}
                                 className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                                 role="menuitem"

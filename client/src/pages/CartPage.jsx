@@ -20,7 +20,7 @@ function CartPage() {
       localStorage.setItem("cart", JSON.stringify(myCart));
       alert("item removed successfully");
     } catch (err) {
-      console.log(err);
+      alert(err);
     }
   };
 
@@ -28,12 +28,9 @@ function CartPage() {
     let total = 0;
     for (let i = 0; i < cart.length; i++) {
       total += cart[i].price;
-      console.log(total);
     }
     setTotalPrice(total);
   }, [cart]);
-
-  console.log(cart);
 
   return (
     <>
@@ -170,7 +167,7 @@ function CartPage() {
                       <div className="flex justify-end">
                         <a
                           href="#"
-                          className="block rounded bg-gray-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600"
+                          className="block rounded bg-green-600 px-5 py-3 text-sm text-gray-100 transition hover:bg-green-700"
                         >
                           Checkout
                         </a>

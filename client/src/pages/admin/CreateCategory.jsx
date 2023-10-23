@@ -22,17 +22,13 @@ function CreateCategory() {
         { name: input },
         { headers: { Authorization: `Bearer ${auth?.token}` } }
       );
-      console.log(res);
       if (res.data.success) {
-        console.log("good");
         alert("category added");
         getAllCategories();
       } else {
-        console.log("bad");
       }
     } catch (err) {
       alert(`can't add category some error , `, err);
-      console.log("Something went wrong while creating category", err);
     }
   };
 
@@ -42,15 +38,11 @@ function CreateCategory() {
       const { data } = await axios.get(
         `${API_ENDPOINT}/api/v1/category/get-all-category`
       );
-      console.log(data.allCategory);
       if (data.success) {
         setInput("");
-        setCategories(data.allCategory);
       } else {
-        console.log("some error in categories");
       }
     } catch (err) {
-      console.log(err);
       alert("something went wrong ", err);
     }
   };
@@ -69,16 +61,13 @@ function CreateCategory() {
           },
         }
       );
-      console.log(data);
       if (data.success) {
         getAllCategories();
         alert(data.deleteCategory.name + " deleted successfully");
       } else {
         alert("some error");
-        console.log("some error");
       }
     } catch (err) {
-      console.log(err);
       alert("error while deleting category", err);
     }
   };

@@ -26,14 +26,11 @@ function Home() {
       const { data } = await axios.get(
         `${API_ENDPOINT}/api/v1/category/get-all-category`
       );
-      console.log(data.allCategory);
+
       if (data.success) {
         setCategories(data.allCategory);
-      } else {
-        console.log("some error in categories");
       }
     } catch (err) {
-      console.log(err);
       alert("something went wrong ", err);
     }
   };
@@ -49,15 +46,11 @@ function Home() {
         `${API_ENDPOINT}/api/v1/product/get-products`
       );
       if (data) {
-        console.log(data);
         setProducts(data.products);
-        console.log("Got all products successfully");
         // alert("all product got successfully");
       } else {
-        console.log("Some error occurred:", data.message);
       }
     } catch (err) {
-      console.log(err.message);
       alert("Something went wrong: " + err.message);
     }
   };
@@ -85,26 +78,6 @@ function Home() {
     setSelectedPrice(value);
   };
 
-  // // get total count
-  // const getTotal = async () => {
-  //   try {
-  //     const { data } = await axios.get(
-  //       `${API_ENDPOINT}/api/v1/product/product-count`
-  //     );
-  //     console.log(data);
-  //     if (data) {
-  //       setTotal(data?.total);
-  //     }
-  //   } catch (err) {
-  //     console.log(err.message);
-  //     alert("Something went wrong: " + err.message);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getTotal();
-  // }, []);
-  //
   // get filtered product
   const filterProducts = async () => {
     try {
@@ -114,12 +87,8 @@ function Home() {
       );
       if (data.success) {
         setProducts(data?.products);
-        console.log("Got all products successfully");
-      } else {
-        console.log("Some error occurred:", data.message);
       }
     } catch (err) {
-      console.log(err.message);
       alert("Something went wrong: " + err.message);
     }
   };
@@ -142,7 +111,6 @@ function Home() {
     window.location.reload();
   };
 
-  console.log(products);
   return (
     <>
       <Hero />

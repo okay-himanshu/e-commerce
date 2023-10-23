@@ -19,7 +19,6 @@ function Private() {
         },
       });
       if (res.data.ok) {
-        console.log("ok", res.data);
         setOk(true);
       } else {
         setOk(false);

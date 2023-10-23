@@ -60,7 +60,6 @@ function CreateProducts() {
         alert("Some error", data?.message);
       }
     } catch (err) {
-      console.log(err.response.data);
       alert("Some error", err?.message);
     }
   };

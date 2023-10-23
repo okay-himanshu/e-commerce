@@ -22,11 +22,8 @@ function ProductDetails() {
       if (data) {
         setProduct(data.product);
         getRelatedProduct(data.product._id, data.product.category._id);
-        console.log(data.product._id, data.product.category._id);
-        console.log("data", data.product);
       }
     } catch (err) {
-      console.log(err.message);
       alert("Something went wrong: " + err.message);
     }
   };
@@ -44,12 +41,8 @@ function ProductDetails() {
       if (data) {
         setRelatedProduct(data.products);
       }
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
-
-  console.log(relatedProduct);
 
   return (
     <>
@@ -129,8 +122,8 @@ function ProductDetails() {
                   <p className=" font-normal text-gray-700 dark:text-gray-400">
                     {product?.description}
                   </p>
-                  <p className=" font-normal text-gray-700 dark:text-gray-400">
-                    {product?.price}
+                  <p className="  text-gray-900 font-bold  text-2xl">
+                    ₹ {product?.price}
                   </p>
                 </div>
                 <div className="flex gap-4 ">

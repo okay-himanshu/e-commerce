@@ -15,8 +15,7 @@ function AdminRoute() {
           Authorization: `Bearer ${auth?.token}`,
         },
       });
-      console.log(res.data);
-      console.log(auth.token);
+
       if (res.data.ok) {
         setOk(true);
       } else {

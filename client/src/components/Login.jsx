@@ -35,7 +35,7 @@ const Login = () => {
         alert(res.data.message);
       }
     } catch (err) {
-      console.log(err);
+      alert("error", err);
     }
   };
 
