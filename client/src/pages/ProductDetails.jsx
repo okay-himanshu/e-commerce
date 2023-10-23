@@ -49,6 +49,8 @@ function ProductDetails() {
     }
   };
 
+  console.log(relatedProduct);
+
   return (
     <>
       <div className=" flex items-center justify-center flex-col sm:flex-row bg-white m-2 p-2 rounded-md  md:gap-10 ">
@@ -102,41 +104,43 @@ function ProductDetails() {
       </div>
       <hr />
 
-      <div>
-        <h1>SIMILAR PRODUCTS</h1>
-        <div className="overflow-x-scroll flex">
-          {relatedProduct.map((product) => (
-            <div key={product._id}>
-              <div className="max-w-sm product-card border">
-                <a href="#" className="flex justify-center">
+      <div className="mt-10">
+        <h1 className="text-4xl font-bold text-center text-gray-600 mb-10">
+          SIMILAR PRODUCTS
+        </h1>
+        <div className="overflow-x-scroll flex justify-center ">
+          {relatedProduct?.map((product) => (
+            <div key={product?._id} className="m-5 ">
+              <div className="max-w-sm product-card  border-2 border-gray-300 rounded-3xl hover:border-4 duration-100 hover:scale-95 p-10">
+                <div className="flex justify-center">
                   <img
-                    className="rounded-t-lg"
-                    src={`${API_ENDPOINT}/api/v1/product/product-image/${product._id}`}
-                    alt={product.name}
+                    className="rounded-t-lg "
+                    src={`${API_ENDPOINT}/api/v1/product/product-image/${product?._id}`}
+                    alt={product?.name}
                   />
-                </a>
-                <div className="p-5">
+                </div>
+                <hr className="mt-2 mb-2 " />
+                <div className="p-2">
                   <a href="#">
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                      {product.name}
+                    <h5 className=" text-xl font-bold tracking-tight text-gray-600 capitalize">
+                      {product?.name}
                     </h5>
                   </a>
-                  <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                    {product.description}
+                  <p className=" font-normal text-gray-700 dark:text-gray-400">
+                    {product?.description}
                   </p>
-                  <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                    {product.price}
+                  <p className=" font-normal text-gray-700 dark:text-gray-400">
+                    {product?.price}
                   </p>
                 </div>
-                {/* <Button
-                    title={"view more "}
-                    className="bg-color_secondary text-color_white"
+                <div className="flex gap-4 ">
+                  <Button
+                    title={"View Details "}
+                    className="bgGreen"
                     handleClick={() => navigate(`/product/${product.slug}`)}
-                  /> */}
-                <Button
-                  title={"Add to cart"}
-                  className="bg-color_primary text-color_white"
-                />
+                  />
+                  <Button title={"Add To Cart "} className="bgYellow" />
+                </div>
               </div>
             </div>
           ))}
