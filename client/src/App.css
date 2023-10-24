@@ -9,3 +9,22 @@
 html {
   overflow-x: hidden;
 }
+
+/* Default styles for the category and product sections */
+.w-30 {
+  width: 30%;
+}
+
+/* Adjust the width for screens less than 1000px */
+@media (max-width: 1000px) {
+  .w-30 {
+    width: 20%;
+  }
+}
+
+/* Rearrange sections for screens less than 768px */
+@media (max-width: 768px) {
+  .w-30 {
+    width: 100%; /* Full width for category section */
+  }
+}
