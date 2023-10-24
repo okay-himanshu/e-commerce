@@ -1,9 +1,8 @@
 import React from "react";
 import axios from "axios";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
-import { Button, CustomTitle, Input } from "./";
-import { login } from "../svgs";
 import env_config from "../config/env_config";
 import { useAuth } from "../contexts/auth";
 
@@ -23,7 +22,7 @@ const Login = () => {
         password,
       });
       if (res.data.success) {
-        alert(res.data.message);
+        toast.success(res.data.message);
         setAuth({
           ...auth,
           user: res.data.user,
@@ -32,10 +31,10 @@ const Login = () => {
         localStorage.setItem("auth", JSON.stringify(res.data));
         navigate("/home");
       } else {
-        alert(res.data.message);
+        toast.error(res.data.message);
       }
     } catch (err) {
-      alert("error", err);
+      toast.error(err.message);
     }
   };
 

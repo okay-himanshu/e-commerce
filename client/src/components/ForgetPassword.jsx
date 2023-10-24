@@ -1,10 +1,10 @@
 import React from "react";
 import axios from "axios";
-import { NavLink, Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { IoMdKey } from "react-icons/io";
+import toast from "react-hot-toast";
 
 import { useAuth } from "../contexts/auth";
-import { Input, CustomTitle, Button } from "../components";
 
 function ForgetPassword() {
   const [email, setEmail] = React.useState("");
@@ -24,13 +24,13 @@ function ForgetPassword() {
       );
 
       if (res.data.success) {
-        alert(res.data.message);
+        toast.success(res.data.message);
         navigate("/login");
       } else {
-        alert(res.data.message);
+        toast.error(res.data.message);
       }
     } catch (error) {
-      alert("something went wrong ", error);
+      toast.error(error.message);
     }
   };
   return (

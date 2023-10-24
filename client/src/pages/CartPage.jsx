@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import { useAuth } from "../contexts/auth";
 import { useCart } from "../contexts/cart";
-import { Button } from "../components";
 
 function CartPage() {
   const [totalPrice, setTotalPrice] = useState(0);
-  const [auth, setAuth, API_ENDPOINT] = useAuth();
+  const [, , API_ENDPOINT] = useAuth();
   const [cart, setCart] = useCart();
-
-  const navigate = useNavigate();
 
   const removeCartItem = (pid) => {
     try {
@@ -18,9 +15,9 @@ function CartPage() {
       myCart = myCart.filter((prod) => prod._id !== pid);
       setCart(myCart);
       localStorage.setItem("cart", JSON.stringify(myCart));
-      alert("item removed successfully");
+      toast.success("item removed successfully");
     } catch (err) {
-      alert(err);
+      toast.error(err);
     }
   };
 
@@ -165,12 +162,21 @@ function CartPage() {
                       </div>
 
                       <div className="flex justify-end">
-                        <a
-                          href="#"
+                        <div
+                          onClick={() =>
+                            toast("Payment feature coming soon!", {
+                              icon: "",
+                              style: {
+                                borderRadius: "10px",
+                                background: "#333",
+                                color: "#fff",
+                              },
+                            })
+                          }
                           className="block rounded bg-green-600 px-5 py-3 text-sm text-gray-100 transition hover:bg-green-700"
                         >
                           Checkout
-                        </a>
+                        </div>
                       </div>
                     </div>
                   </div>

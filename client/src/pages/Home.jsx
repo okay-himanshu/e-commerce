@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
 import axios from "axios";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import { Button, Hero, SignUp, Prices } from "../components/index";
 import { hero1, hero2, hero3 } from "../images/index";
@@ -31,7 +31,7 @@ function Home() {
         setCategories(data.allCategory);
       }
     } catch (err) {
-      alert("something went wrong ", err);
+      toast.error(err.message);
     }
   };
 
@@ -47,11 +47,9 @@ function Home() {
       );
       if (data) {
         setProducts(data.products);
-        // alert("all product got successfully");
-      } else {
       }
     } catch (err) {
-      alert("Something went wrong: " + err.message);
+      toast(err.message);
     }
   };
 
@@ -89,22 +87,17 @@ function Home() {
         setProducts(data?.products);
       }
     } catch (err) {
-      alert("Something went wrong: " + err.message);
+      toast(err.message);
     }
   };
 
   // add to cart
 
   const addToCart = (product) => {
-    if (auth?.token) {
-      setCart([...cart, product]);
+    setCart([...cart, product]);
 
-      localStorage.setItem("cart", JSON.stringify([...cart, product]));
-      alert("product added to cart");
-    } else {
-      alert("login/signup to add to cart");
-      navigate("/signup");
-    }
+    localStorage.setItem("cart", JSON.stringify([...cart, product]));
+    toast.success("product added to cart ");
   };
 
   const resetFilter = () => {

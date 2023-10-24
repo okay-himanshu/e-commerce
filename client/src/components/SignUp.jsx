@@ -1,8 +1,9 @@
 import React from "react";
 import axios from "axios";
-import { useNavigate, Link, NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
+import toast from "react-hot-toast";
 
-import { Button, CustomTitle, Input } from "./";
+import { Button, Input } from "./";
 import env_config from "../config/env_config";
 
 const SignUp = () => {
@@ -16,7 +17,15 @@ const SignUp = () => {
   const API_ENDPOINT = env_config.VITE_API_ENDPOINTS;
 
   const handleSubmit = (event) => event.preventDefault();
+
   const userSignUp = async () => {
+    // checking if email pattern is valid or not
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!email.match(emailPattern)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+
     try {
       const res = await axios.post(`${API_ENDPOINT}/api/v1/auth/signup`, {
         name,
@@ -26,13 +35,13 @@ const SignUp = () => {
         securityQuestion,
       });
       if (res.data.success) {
-        alert(res.data.message);
+        toast.success("signup successfully");
         navigate("/login");
       } else {
-        alert(res.data.message);
+        toast.error(res.data.message);
       }
     } catch (err) {
-      alert("error", err);
+      toast.error(err.message);
     }
   };
 

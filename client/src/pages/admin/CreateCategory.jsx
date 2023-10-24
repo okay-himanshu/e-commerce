@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { AiOutlinePlus } from "react-icons/ai";
 import { MdDeleteOutline } from "react-icons/md";
+import toast from "react-hot-toast";
 
 import { AdminMenu } from "../../components";
 import { useAuth } from "../../contexts/auth";
@@ -23,12 +24,12 @@ function CreateCategory() {
         { headers: { Authorization: `Bearer ${auth?.token}` } }
       );
       if (res.data.success) {
-        alert("category added");
+        toast.success("category added");
         getAllCategories();
       } else {
       }
     } catch (err) {
-      alert(`can't add category some error , `, err);
+      toast.error(`can't add category some error , `, err);
     }
   };
 
@@ -40,10 +41,11 @@ function CreateCategory() {
       );
       if (data.success) {
         setInput("");
+        setCategories(data.allCategory);
       } else {
       }
     } catch (err) {
-      alert("something went wrong ", err);
+      toast.error("something went wrong ", err.message);
     }
   };
 
@@ -63,12 +65,12 @@ function CreateCategory() {
       );
       if (data.success) {
         getAllCategories();
-        alert(data.deleteCategory.name + " deleted successfully");
+        toast.success(data?.deleteCategory.name + " deleted successfully");
       } else {
-        alert("some error");
+        toast("some error");
       }
     } catch (err) {
-      alert("error while deleting category", err);
+      toast.error("error while deleting category", err);
     }
   };
 

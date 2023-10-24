@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { AiOutlineStar } from "react-icons/ai";
-import { FaOpencart } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 import { useAuth } from "../contexts/auth";
 import { Button } from "../components";
@@ -24,7 +24,7 @@ function ProductDetails() {
         getRelatedProduct(data.product._id, data.product.category._id);
       }
     } catch (err) {
-      alert("Something went wrong: " + err.message);
+      toast.error("Something went wrong: " + err.message);
     }
   };
 

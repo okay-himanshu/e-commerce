@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import { useAuth } from "../../contexts/auth";
 import { AdminMenu, Button, Input } from "../../components";
@@ -76,13 +77,13 @@ function UpdateProduct() {
         }
       );
       if (data.success) {
-        alert("Product updated successfully", data.message);
+        toa.success("Product updated successfully", data.message);
         navigate("/dashboard/admin/products");
       } else {
-        alert("Some error", data?.message);
+        toast.error("Some error", data?.message);
       }
     } catch (err) {
-      alert("Some error", err?.message);
+      toast.error("Some error", err?.message);
     }
   };
 
@@ -97,13 +98,13 @@ function UpdateProduct() {
         }
       );
       if (data.success) {
-        alert("Product deleted successfully", data.message);
+        toast.success("Product deleted successfully", data.message);
         navigate("/dashboard/admin/products");
       } else {
-        alert("Some error", data?.message);
+        toast.error("Some error", data?.message);
       }
     } catch (err) {
-      alert("Some error", err?.message);
+      toast.error("Some error", err?.message);
     }
   };
 

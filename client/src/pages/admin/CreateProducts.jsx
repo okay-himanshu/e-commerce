@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import { useAuth } from "../../contexts/auth";
 import { AdminMenu, Button, Input } from "../../components";
@@ -54,13 +55,13 @@ function CreateProducts() {
         }
       );
       if (data.success) {
-        alert("Product added", data.message);
+        toast.success("Product added", data.message);
         navigate("/dashboard/admin/products");
       } else {
-        alert("Some error", data?.message);
+        toast.error("Some error", data?.message);
       }
     } catch (err) {
-      alert("Some error", err?.message);
+      toast.error("Some error", err?.message);
     }
   };
 

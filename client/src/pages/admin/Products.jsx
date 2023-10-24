@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import { AdminMenu } from "../../components";
 import { useAuth } from "../../contexts/auth";
@@ -20,7 +21,7 @@ function Products() {
       }
     } catch (err) {
       console.error(err);
-      alert("Something went wrong: " + err.message);
+      toast.error("Something went wrong: " + err.message);
     }
   };
 
