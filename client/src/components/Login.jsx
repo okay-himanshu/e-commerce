@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { NavLink, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { AiOutlineClose } from "react-icons/ai";
+import { GrAnnounce } from "react-icons/gr";
 
 import env_config from "../config/env_config";
 import { useAuth } from "../contexts/auth";
@@ -10,6 +12,7 @@ const Login = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [auth, setAuth] = useAuth();
+  const [closeBanner, setCloseBanner] = useState(true);
 
   const navigate = useNavigate();
   const API_ENDPOINT = env_config.VITE_API_ENDPOINTS;
@@ -44,9 +47,44 @@ const Login = () => {
     if (auth) navigate("/");
   }, []);
 
+  const handleBannerClose = () => setCloseBanner(true);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setCloseBanner(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <>
-      <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 ">
+      <div className=" relative mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 ">
+        <div
+          className={`${
+            closeBanner ? " transform -translate-x-96 " : " transform "
+          } absolute left-0 top-0 z-10 rounded-md border bg-white p-5 mt-2 shadow-lg transition-transform duration-500 ease-in-out`}
+        >
+          <div className="flex items-center gap-2">
+            <span className="shrink-0 rounded-full bg-blue-400 p-2 text-white">
+              {<GrAnnounce color="#fff" />}
+            </span>
+
+            <p className="font-medium sm:text-lg">LOGIN AS ADMIN ?</p>
+            <hr />
+          </div>
+
+          <p className="mt-3 text-gray-500">Email: admin@admin.com</p>
+          <p className="mt-1 text-gray-500">Password: admin</p>
+
+          <div
+            className="absolute top-0 -right-5 cursor-pointer"
+            onClick={handleBannerClose}
+          >
+            <AiOutlineClose size={20} />
+          </div>
+        </div>
+
         <div className="mx-auto max-w-lg">
           <form
             onSubmit={handleSubmit}
