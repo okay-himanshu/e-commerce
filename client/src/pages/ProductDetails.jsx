@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { AiOutlineStar } from "react-icons/ai";
 import toast from "react-hot-toast";
+import { BiChevronDown } from "react-icons/bi";
+import { MdOutlineKeyboardArrowUp } from "react-icons/md";
 
 import { useAuth } from "../contexts/auth";
-import { Button } from "../components";
+
 function ProductDetails() {
   const [product, setProduct] = useState({});
   const [relatedProduct, setRelatedProduct] = useState([]);
+  const [viewMore, setViewMore] = useState(false);
 
   const [, , API_ENDPOINT] = useAuth();
   const params = useParams();
+  const navigate = useNavigate();
 
   const getSingleProduct = async () => {
     try {
@@ -44,6 +48,10 @@ function ProductDetails() {
     } catch (err) {}
   };
 
+  const handleViewMore = () => {
+    setViewMore(!viewMore);
+  };
+
   return (
     <>
       <div className=" flex items-center justify-center flex-col sm:flex-row bg-white m-2 p-2 rounded-md  md:gap-10 ">
@@ -51,13 +59,15 @@ function ProductDetails() {
           <img
             src={`${API_ENDPOINT}/api/v1/product/product-image/${product._id}`}
             alt={product?.name}
-            className="p-6 w-80 sm:w-96 md:w-[30rem] rounded-t-lg object-contain"
+            className="p-6 w-80 sm:w-96 md:w-[24rem] rounded-t-lg object-contain"
           />
         </div>
         <div className="text-gray-600 md:w-[30rem] ">
           <h1 className="font-bold text-4xl capitalize ">{product?.name}</h1>
           <div className="bg-gray-600 w-20 h-[2px] mt-2 mb-2 rounded-full"></div>
-          <p className="text-gray-600">₹ {product?.price}</p>
+          <p className="text-gray-600 text-lg font-medium">
+            ₹ {product?.price}
+          </p>
           <div className="flex items-center text-gray-400">
             <AiOutlineStar />
             <AiOutlineStar />
@@ -66,7 +76,33 @@ function ProductDetails() {
             <AiOutlineStar />
             <p className="text-gray-500 ml-2">0 reviews</p>
           </div>
-          <p>{product?.description}</p>
+          <p className="mt-2">
+            {!viewMore
+              ? product?.description?.substring(0, 300)
+              : product?.description}
+          </p>
+          <div
+            className=" mt-1 w-fit duration-200 font-medium cursor-pointer "
+            onClick={handleViewMore}
+          >
+            {!viewMore ? (
+              <p className="flex items-center border-4 border-gray-600 p-2 w-fit">
+                View More{" "}
+                <BiChevronDown
+                  size={25}
+                  className="text-gray-600 animate-bounce"
+                />
+              </p>
+            ) : (
+              <p className="flex items-center border-4 border-gray-600 p-2 w-fit">
+                Collapse{" "}
+                <MdOutlineKeyboardArrowUp
+                  size={25}
+                  className="text-gray-600 animate-bounce"
+                />
+              </p>
+            )}
+          </div>
 
           <div className="mt-4 flex justify-between">
             <p>Category</p>
@@ -102,41 +138,39 @@ function ProductDetails() {
           SIMILAR PRODUCTS
         </h1>
         <div className="overflow-x-scroll flex justify-center ">
-          {relatedProduct?.map((product) => (
-            <div key={product?._id} className="m-5 ">
-              <div className="max-w-sm product-card  border-2 border-gray-300 rounded-3xl hover:border-4 duration-100 hover:scale-95 p-10">
-                <div className="flex justify-center">
-                  <img
-                    className="rounded-t-lg "
-                    src={`${API_ENDPOINT}/api/v1/product/product-image/${product?._id}`}
-                    alt={product?.name}
-                  />
+          <div className=" flex   justify-start items-center   ">
+            {relatedProduct.length > 0 ? (
+              relatedProduct.map((product) => (
+                <div key={product._id} className="">
+                  <div className=" w-80  flex  flex-col m-2  max-w-sm bg-white    shadow  border border-gray-300 rounded-xl  ">
+                    <img
+                      className="p-8 rounded-t-lg object-contain h-56 "
+                      src={`${API_ENDPOINT}/api/v1/product/product-image/${product._id}`}
+                      alt="product image"
+                    />
+                    <div className="px-5 pb-5">
+                      <h5 className="text-lg font-semibold tracking-tight text-gray-800 ">
+                        {product?.name}
+                      </h5>
+                      <h5 className=" h-24 text-sm font-medium tracking-tight text-gray-700 ">
+                        {product?.description?.substring(0, 100)}...
+                      </h5>
+
+                      <div className="flex items-center justify-between">
+                        <span className="text-3xl font-bold text-gray-900">
+                          ₹{product?.price}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <hr className="mt-2 mb-2 " />
-                <div className="p-2">
-                  <a href="#">
-                    <h5 className=" text-xl font-bold tracking-tight text-gray-600 capitalize">
-                      {product?.name}
-                    </h5>
-                  </a>
-                  <p className=" font-normal text-gray-700 dark:text-gray-400">
-                    {product?.description}
-                  </p>
-                  <p className="  text-gray-900 font-bold  text-2xl">
-                    ₹ {product?.price}
-                  </p>
-                </div>
-                <div className="flex gap-4 ">
-                  <Button
-                    title={"View Details "}
-                    className="bgGreen"
-                    handleClick={() => navigate(`/product/${product.slug}`)}
-                  />
-                  <Button title={"Add To Cart "} className="bgYellow" />
-                </div>
+              ))
+            ) : (
+              <div className="w-[50rem] flex justify-center items-center   lg:flex lg:flex-wrap lg:justify-center">
+                <p>no product found</p>
               </div>
-            </div>
-          ))}
+            )}
+          </div>
         </div>
       </div>
     </>
