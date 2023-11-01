@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { RiFilter2Fill } from "react-icons/ri";
+import { BiSolidCategory } from "react-icons/bi";
+import { IoPricetagsSharp } from "react-icons/io5";
+import { FiFilter } from "react-icons/fi";
+import { CgDetailsMore } from "react-icons/cg";
 
 import { Button, Hero, SignUp, Prices } from "../components/index";
 import { useAuth } from "../contexts/auth";
@@ -114,29 +117,40 @@ function Home() {
     <>
       <Hero />
 
-      <div className="relative flex justify-end  max-w-screen-xl mt-5  mx-auto  ">
+      {/* filter */}
+      <div className="relative gap-2 flex justify-end  max-w-screen-xl mt-5  mx-auto  ">
         <div
           onClick={filterButton}
-          className=" flex items-center justify-center w-32  px-4 py-2 rounded-full select-none  cursor-pointer bg-gray-200 hover:bg-gray-300 duration-300 "
+          className=" flex  gap-2 font-medium items-center justify-center h-full  px-4 py-2 rounded-full select-none  cursor-pointer bg-gray-300 duration-300 text-gray-700  text-md  uppercase "
         >
-          Filters {<RiFilter2Fill className="" />}
+          <strong className="flex items-center gap-2    font-medium uppercase ">
+            {<FiFilter />}
+          </strong>{" "}
+        </div>
+        <div className=" flex  gap-2 font-medium items-center justify-center   px-4 py-2 rounded-full select-none  cursor-pointer bg-gray-300 duration-300 text-gray-700 text-md uppercase ">
+          <strong className="flex items-center gap-2   font-medium uppercase ">
+            {<CgDetailsMore />}
+          </strong>{" "}
         </div>
 
         <div
-          className={`overflow-y-scroll overflow-x-hidden w-60 h-60 sm:h-80 md:h-96 border border-gray-400 z-50  absolute top-14  ${
+          className={`py-2 mt-2 w-64 px-4 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg overflow-y-scroll overflow-x-hidden  h-60 sm:h-80 md:h-96   z-50  absolute top-14  ${
             filterSelection ? "hidden" : ""
           }`}
         >
-          <div className="border bg-white p-1">
-            <Button
-              title={"Reset Filter"}
-              className="bgTeal"
-              handleClick={resetFilter}
-            />
-            <h1 className="py-4"> Category</h1>
+          <div className=" bg-white p-1">
+            <button
+              onClick={resetFilter}
+              className=" w-full block rounded-md px-4 py-2 text-sm text-gray-600 bg-gray-300 font-normal hover:bg-gray-200 duration-300"
+            >
+              RESET
+            </button>
+            <strong className="flex items-center gap-1 p-2 text-sm font-medium uppercase text-gray-400">
+              {<BiSolidCategory />} Category
+            </strong>
             {categories.map((category) => (
               <ul
-                className="w-48   flex items-center gap-2 border-gray-200 p-1 "
+                className="w-48   flex items-center gap-2 border-gray-200  p-1 "
                 key={category?._id}
               >
                 <div>
@@ -150,18 +164,20 @@ function Home() {
                 </div>
 
                 <div>
-                  <span className="text-sm font-medium text-gray-700">
+                  <span className="text-sm font-medium text-gray-500">
                     {category?.name}
                   </span>
                 </div>
               </ul>
             ))}
           </div>
-          <div className=" border bg-white p-1">
-            <h1 className="py-4">Price</h1>
+          <div className="  bg-white p-1">
+            <strong className="flex items-center gap-1 p-2 text-sm font-medium uppercase text-gray-400">
+              {<IoPricetagsSharp />} price
+            </strong>
             {Prices.map((price) => (
               <React.Fragment key={price._id}>
-                <div>
+                <div className="">
                   <input
                     type="radio"
                     name="price"
@@ -175,7 +191,9 @@ function Home() {
                     htmlFor={`price-${price._id}`}
                     className="flex justify-start cursor-pointer items-center rounded-md border border-gray-100 bg-white px-3 py-2 text-gray-700 hover:border-gray-200  peer-checked:bg-gray-300 "
                   >
-                    <p className="text-sm font-medium">{price.name}</p>
+                    <p className="text-sm text-gray-500 font-medium">
+                      {price.name}
+                    </p>
                   </label>
                 </div>
               </React.Fragment>
