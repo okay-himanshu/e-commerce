@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { AiOutlineStar } from "react-icons/ai";
 import toast from "react-hot-toast";
 import { BiChevronDown } from "react-icons/bi";
@@ -15,7 +15,6 @@ function ProductDetails() {
 
   const [, , API_ENDPOINT] = useAuth();
   const params = useParams();
-  const navigate = useNavigate();
 
   const getSingleProduct = async () => {
     try {
@@ -167,7 +166,7 @@ function ProductDetails() {
               ))
             ) : (
               <div className="w-[50rem] flex justify-center items-center   lg:flex lg:flex-wrap lg:justify-center">
-                <p>no product found</p>
+                <p>No Similar Product Found</p>
               </div>
             )}
           </div>
