@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { BiCart, BiMenuAltRight } from "react-icons/bi";
+import { BiCart } from "react-icons/bi";
 
-import { Button, Search } from "./index";
+import { Button } from "./index";
 import { useAuth } from "../contexts/auth";
 import { useCart } from "../contexts/cart";
 
@@ -12,6 +12,7 @@ function Navbar() {
 
   const handleToggle = () => setToggle(!toggle);
   const handleDropDownMenu = () => setDropDown(!dropDown);
+  const handleMenuClick = () => setToggle(false);
 
   const navigate = useNavigate();
   const navigator = (url) => navigate(url);
@@ -34,42 +35,61 @@ function Navbar() {
     }
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      handleMenuClick();
+    };
+
+    const handleScroll = () => {
+      handleMenuClick();
+    };
+
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <>
-      <header className="bg-white">
+      <header className="bg-white select-none text-sm">
         <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center ">
             <div className="flex-1 md:flex md:items-center md:gap-12">
               <NavLink
-                className="block  text-xl font-bold uppercase text-red-600"
+                className=" select-none text-xl font-bold uppercase bg-gradient-to-l from-gray-700 via-gray-900 to-black text-white px-2 py-1"
                 to="/"
               >
-                Trend_Tribe_
+                TREND TRIBE
               </NavLink>
             </div>
 
-            <div className="flex items-center md:gap-6">
+            <div className="flex items-center md:gap-6 ">
               <ul
-                className={`flex flex-col absolute top-0 left-0 ${
-                  toggle
-                    ? "-translate-y-44 transition-all w-screen delay-100"
-                    : "-translate-y-0  transition-all w-full delay-100 "
-                }  md:flex  md:w-full md:relative  md:flex-row items-center  md:mt-0 gap-0 md:gap-6 text-sm`}
+                className={`absolute right-0 
+                    ${
+                      !toggle
+                        ? "-translate-y-80  transition-transform "
+                        : "translate-y-0 transition-transform top-10  text-center mt-5 z-50   rounded-md   bg-white shadow-lg p-4  w-full"
+                    }
+                      sm:translate-y-0 
+                    sm:relative sm:items-center sm:gap-5 sm:flex
+                    transition-all duration-100
+                  `}
               >
                 <li className="">
                   <div className="relative  sm:block">
                     <input
-                      className="h-10 w-full rounded-lg border-none bg-white pe-10 ps-4 text-sm shadow-sm sm:w-56"
-                      id="search"
-                      type="search"
-                      placeholder="Search website..."
+                      className="h-10 outline-none w-full  rounded-md border border-gray-400 bg-white pe-10 ps-4 text-sm shadow-sm sm:w-40 md:w-56"
+                      type="input"
+                      placeholder="Search Items"
                     />
 
                     <button
                       type="button"
-                      className="absolute end-1 top-1/2 -translate-y-1/2 rounded-md bg-gray-50 p-2 text-gray-600 transition hover:text-gray-700"
+                      className="absolute end-1 border-l border-gray-300 top-1/2 -translate-y-1/2 rounded-none  p-2 text-gray-600 transition hover:text-gray-700 "
                     >
-                      <span className="sr-only">Search</span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-4 w-4"
@@ -89,15 +109,16 @@ function Navbar() {
                 </li>
                 <li>
                   <NavLink
+                    onClick={handleMenuClick}
                     to="/"
                     className="text-gray-500 transition hover:text-gray-500/75"
                   >
                     Home
                   </NavLink>
                 </li>
-
                 <li>
                   <NavLink
+                    onClick={handleMenuClick}
                     className="text-gray-500 transition hover:text-gray-500/75"
                     to="/category"
                   >
@@ -106,43 +127,44 @@ function Navbar() {
                 </li>
                 <li>
                   <div
-                    class="relative py-2 ml-2"
-                    onClick={() => navigator("/cart")}
+                    className=" py-2 ml-2 cursor-pointer"
+                    onClick={() => {
+                      navigator("/cart");
+                      handleMenuClick();
+                    }}
                   >
-                    <div class=" absolute left-4 -top-1">
-                      <p class="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-3 text-xs text-white">
-                        {cart?.length}
-                      </p>
-                    </div>
-                    <div>
+                    <div className="relative flex justify-center">
                       <BiCart size={25} />
+                      <div className=" absolute left-1/2 -top-2">
+                        <p className="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-3 text-xs text-white">
+                          {cart?.length}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </li>
                 <li>
-                  <div className="flex items-center ">
+                  <div className="flex items-center justify-center">
                     {!auth?.user ? (
                       <>
-                        <div className="sm:flex sm:gap-4">
+                        <div className="flex  gap-2 sm:flex sm:gap-4">
                           <Button
                             title="Login"
                             className="bgRed"
                             handleClick={() => navigator("/login")}
                           />
 
-                          <div className="hidden sm:flex">
-                            <Button
-                              title="Register"
-                              className="bgGray"
-                              handleClick={() => navigator("/signup")}
-                            />
-                          </div>
+                          <Button
+                            title="Register"
+                            className="bgGray"
+                            handleClick={() => navigator("/signup")}
+                          />
                         </div>
                       </>
                     ) : (
                       <>
                         <div
-                          className={`relative cursor-pointer`}
+                          className={`relative cursor-pointer `}
                           onClick={handleDropDownMenu}
                         >
                           <div className="inline-flex items-center overflow-hidden rounded-md bg-white">
@@ -154,10 +176,9 @@ function Navbar() {
                           </div>
 
                           <div
-                            className={`absolute end-0 z-10 mt-2 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg ${
+                            className={`z-50 absolute end-0 mt-2 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg ${
                               dropDown ? "hidden" : "visible"
                             }`}
-                            role="menu"
                           >
                             <div className="p-2">
                               <strong className="block p-2 text-xs font-medium uppercase text-gray-400">
@@ -165,6 +186,7 @@ function Navbar() {
                               </strong>
 
                               <NavLink
+                                onClick={handleMenuClick}
                                 to={`/dashboard/${
                                   auth?.user?.role === 1 ? "admin" : "user"
                                 }`}
@@ -174,6 +196,7 @@ function Navbar() {
                                 Profile
                               </NavLink>
                               <NavLink
+                                onClick={handleMenuClick}
                                 to={`/dashboard/${
                                   auth?.user?.role === 1
                                     ? "admin/create-category"
@@ -230,7 +253,7 @@ function Navbar() {
                   </div>
                 </li>
               </ul>
-              <div className="block md:hidden z-50" onClick={handleToggle}>
+              <div className="block sm:hidden z-50" onClick={handleToggle}>
                 <button className="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -252,6 +275,7 @@ function Navbar() {
           </div>
         </div>
       </header>
+      <hr />
     </>
   );
 }
