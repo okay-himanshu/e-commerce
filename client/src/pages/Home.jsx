@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { RiFilter2Fill } from "react-icons/ri";
 
 import { Button, Hero, SignUp, Prices } from "../components/index";
-import { hero1, hero2, hero3 } from "../images/index";
 import { useAuth } from "../contexts/auth";
 import { useCart } from "../contexts/cart";
 
@@ -13,6 +13,7 @@ function Home() {
   const [categories, setCategories] = useState([]);
   const [checked, setChecked] = useState([]);
   const [selectedPrice, setSelectedPrice] = useState([]);
+  const [filterSelection, setFilterSelection] = useState(true);
   // const [total, setTotal] = useState(0);
   // const [page, setPage] = useState(1);
 
@@ -101,67 +102,95 @@ function Home() {
   };
 
   const resetFilter = () => {
-    window.location.reload();
+    if (checked.length === 0 || selectedPrice.length === 0)
+      return toast.error("no selected filters");
+    else window.location.reload();
   };
+
+  // filter toggle
+  const filterButton = () => setFilterSelection(!filterSelection);
 
   return (
     <>
       <Hero />
-      <main className="flex justify-center mx-5">
-        <div className="flex justify-between ">
-          <div className="w-1/5 hidden w-370:hidden xs:block ">
-            <div className="border ">
-              <h1 className="py-4"> Category</h1>
-              {categories.map((category) => (
-                <ul
-                  className="w-48   flex items-center gap-2 border-gray-200 p-1 "
-                  key={category?._id}
-                >
-                  <div>
-                    <input
-                      type="checkbox"
-                      className=" w-5 rounded border-gray-300"
-                      onChange={(event) =>
-                        handleChecked(event.target.checked, category._id)
-                      }
-                    />
-                  </div>
 
-                  <div>
-                    <span className="text-sm font-medium text-gray-700">
-                      {category?.name}
-                    </span>
-                  </div>
-                </ul>
-              ))}
-            </div>
-            <div className="mt-2 border">
-              <h1 className="py-4">Price</h1>
-              {Prices.map((price) => (
-                <React.Fragment key={price._id}>
-                  <div>
-                    <input
-                      type="radio"
-                      name="price"
-                      value={price.array}
-                      id={`price-${price._id}`}
-                      className="peer hidden"
-                      checked={selectedPrice === price.array}
-                      onChange={() => handleRadioChange(price.array)}
-                    />
-                    <label
-                      htmlFor={`price-${price._id}`}
-                      className="flex justify-start cursor-pointer items-center rounded-md border border-gray-100 bg-white px-3 py-2 text-gray-700 hover:border-gray-200  peer-checked:bg-gray-300 "
-                    >
-                      <p className="text-sm font-medium">{price.name}</p>
-                    </label>
-                  </div>
-                </React.Fragment>
-              ))}
-            </div>
+      <div className="relative flex justify-end  max-w-screen-xl mt-5  mx-auto  ">
+        <div
+          onClick={filterButton}
+          className=" flex items-center justify-center w-32  px-4 py-2 rounded-full select-none  cursor-pointer bg-gray-200 hover:bg-gray-300 duration-300 "
+        >
+          Filters {<RiFilter2Fill className="" />}
+        </div>
+
+        <div
+          className={`overflow-y-scroll overflow-x-hidden w-60 h-60 sm:h-80 md:h-96 border border-gray-400 z-50  absolute top-14  ${
+            filterSelection ? "hidden" : ""
+          }`}
+        >
+          <div className="border bg-white p-1">
+            <Button
+              title={"Reset Filter"}
+              className="bgTeal"
+              handleClick={resetFilter}
+            />
+            <h1 className="py-4"> Category</h1>
+            {categories.map((category) => (
+              <ul
+                className="w-48   flex items-center gap-2 border-gray-200 p-1 "
+                key={category?._id}
+              >
+                <div>
+                  <input
+                    type="checkbox"
+                    className=" w-5 rounded border-gray-300"
+                    onChange={(event) =>
+                      handleChecked(event.target.checked, category._id)
+                    }
+                  />
+                </div>
+
+                <div>
+                  <span className="text-sm font-medium text-gray-700">
+                    {category?.name}
+                  </span>
+                </div>
+              </ul>
+            ))}
           </div>
+          <div className=" border bg-white p-1">
+            <h1 className="py-4">Price</h1>
+            {Prices.map((price) => (
+              <React.Fragment key={price._id}>
+                <div>
+                  <input
+                    type="radio"
+                    name="price"
+                    value={price.array}
+                    id={`price-${price._id}`}
+                    className="peer hidden"
+                    checked={selectedPrice === price.array}
+                    onChange={() => handleRadioChange(price.array)}
+                  />
+                  <label
+                    htmlFor={`price-${price._id}`}
+                    className="flex justify-start cursor-pointer items-center rounded-md border border-gray-100 bg-white px-3 py-2 text-gray-700 hover:border-gray-200  peer-checked:bg-gray-300 "
+                  >
+                    <p className="text-sm font-medium">{price.name}</p>
+                  </label>
+                </div>
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
+      </div>
 
-          <div className="w-4/5 flex  flex-wrap justify-center items-center lg:flex lg:flex-wrap lg:justify-start ">
+      <main
+        className={`flex  mx-auto  max-w-screen-2xl justify-center lg:flex  lg:items-center ${
+          filterSelection ? "blur-0 duration-500  " : "blur-sm duration-500"
+        }`}
+      >
+        <div className="flex justify-between ">
+          <div className=" flex mx-auto  flex-wrap justify-center items-center lg:flex lg:flex-wrap  ">
             {products.length > 0 ? (
               products.map((product) => (
                 <div key={product._id} className="">

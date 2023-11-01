@@ -32,7 +32,7 @@ function Hero() {
 
   return (
     <>
-      <div className=" relative mx-auto  max-w-screen-2xl justify-center lg:flex  lg:items-center ">
+      <div className="select-none relative mx-auto  max-w-screen-2xl justify-center lg:flex  lg:items-center ">
         <img src={image} alt="" className="w-full " />
         <div
           className="absolute right-0 top-1/2 text-white text-2xl sm:text-6xl cursor-pointer hover:border"
