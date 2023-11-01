@@ -4,6 +4,7 @@ import Dashboard from "./user/Dashboard";
 import AdminDashBoard from "./admin/AdminDashBoard";
 import ProductDetails from "./ProductDetails";
 import CartPage from "./CartPage";
+import Footer from "./Footer";
 
 // admin
 import CreateCategory from "./admin/CreateCategory";
@@ -30,4 +31,5 @@ export {
   UpdateProduct,
   ProductDetails,
   CartPage,
+  Footer,
 };

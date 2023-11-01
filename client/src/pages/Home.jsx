@@ -10,6 +10,7 @@ import { CgDetailsMore } from "react-icons/cg";
 import { Button, Hero, SignUp, Prices } from "../components/index";
 import { useAuth } from "../contexts/auth";
 import { useCart } from "../contexts/cart";
+import { Footer } from "../pages";
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -18,7 +19,7 @@ function Home() {
   const [selectedPrice, setSelectedPrice] = useState([]);
   const [filterSelection, setFilterSelection] = useState(true);
 
-  const [auth, , API_ENDPOINT] = useAuth();
+  const [, , API_ENDPOINT] = useAuth();
   const [cart, setCart] = useCart();
 
   const navigate = useNavigate();
@@ -304,6 +305,7 @@ function Home() {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   );
 }
