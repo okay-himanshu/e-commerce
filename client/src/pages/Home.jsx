@@ -102,7 +102,7 @@ function Home() {
   };
 
   const resetFilter = () => {
-    if (checked.length === 0 || selectedPrice.length === 0)
+    if (!checked.length && selectedPrice.length === 0)
       return toast.error("no selected filters");
     else window.location.reload();
   };
