@@ -52,7 +52,7 @@ function CartPage() {
                 <div className="mt-8">
                   {cart?.map((product) => {
                     return (
-                      <>
+                      <React.Fragment key={product?._id}>
                         <ul className="space-y-4">
                           <li className="flex items-center gap-4">
                             <img
@@ -115,7 +115,7 @@ function CartPage() {
                             </div>
                           </li>
                         </ul>
-                      </>
+                      </React.Fragment>
                     );
                   })}
 

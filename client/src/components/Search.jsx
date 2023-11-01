@@ -7,7 +7,7 @@ function Search({ placeholder, handleChange, className = "" }) {
         type="text"
         placeholder={placeholder}
         onChange={handleChange}
-        className={`  ${className} pr-2 pl-2 pt-0.5 pb-0.5  outline-none rounded-sm  `}
+        className={`  ${className} pr-2 pl-2 pt-0.5 pb-0.5  border rounded-sm  `}
       />
     </>
   );
