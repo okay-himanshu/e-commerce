@@ -61,7 +61,7 @@ function Navbar() {
                 className=" select-none text-xl font-bold uppercase bg-gradient-to-l from-gray-700 via-gray-900 to-black text-white px-2 py-1"
                 to="/"
               >
-                TREND TRIBE
+                TREND_TRIBE
               </NavLink>
             </div>
 

@@ -85,15 +85,15 @@ function ProductDetails() {
             onClick={handleViewMore}
           >
             {!viewMore ? (
-              <p className="flex items-center border-4 border-gray-600 p-2 w-fit">
-                View More{" "}
+              <p className="flex items-center  rounded-full border border-gray-300 hover:border-gray-200 duration-150 px-4 py-1 w-fit">
+                Expand{" "}
                 <BiChevronDown
                   size={25}
                   className="text-gray-600 animate-bounce"
                 />
               </p>
             ) : (
-              <p className="flex items-center border-4 border-gray-600 p-2 w-fit">
+              <p className="flex items-center  rounded-full border border-gray-300 hover:border-gray-200 duration-150 px-4 py-1 w-fit">
                 Collapse{" "}
                 <MdOutlineKeyboardArrowUp
                   size={25}

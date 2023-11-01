@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { BiHomeHeart } from "react-icons/bi";
 
 import { pnf } from "../svgs";
 import { Button } from "../components";
@@ -21,6 +22,7 @@ function Page404() {
         }}
         className="bgGreen"
         title={"GO BACK HOME"}
+        icon={<BiHomeHeart size={20} />}
       />
     </div>
   );

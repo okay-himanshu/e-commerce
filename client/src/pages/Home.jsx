@@ -17,8 +17,6 @@ function Home() {
   const [checked, setChecked] = useState([]);
   const [selectedPrice, setSelectedPrice] = useState([]);
   const [filterSelection, setFilterSelection] = useState(true);
-  // const [total, setTotal] = useState(0);
-  // const [page, setPage] = useState(1);
 
   const [auth, , API_ENDPOINT] = useAuth();
   const [cart, setCart] = useCart();
@@ -121,13 +119,13 @@ function Home() {
       <div className="relative gap-2 flex justify-end  max-w-screen-xl mt-5  mx-auto  ">
         <div
           onClick={filterButton}
-          className=" flex  gap-2 font-medium items-center justify-center h-full  px-4 py-2 rounded-full select-none  cursor-pointer bg-gray-300 duration-300 text-gray-700  text-md  uppercase "
+          className=" flex  gap-2 font-medium items-center justify-center h-full  px-4 py-2 rounded-full select-none  cursor-pointer bg-gray-300 border-2 border-gray-300 hover:bg-gray-100  duration-300 text-gray-700  text-md  uppercase "
         >
-          <strong className="flex items-center gap-2    font-medium uppercase ">
+          <strong className="flex items-center gap-2 font-medium uppercase ">
             {<FiFilter />}
           </strong>{" "}
         </div>
-        <div className=" flex  gap-2 font-medium items-center justify-center   px-4 py-2 rounded-full select-none  cursor-pointer bg-gray-300 duration-300 text-gray-700 text-md uppercase ">
+        <div className=" flex  gap-2 font-medium items-center justify-center   px-4 py-2 rounded-full select-none  cursor-pointer hover:bg-gray-100 border-2 border-gray-300 bg-gray-300 duration-300 text-gray-700 text-md uppercase ">
           <strong className="flex items-center gap-2   font-medium uppercase ">
             {<CgDetailsMore />}
           </strong>{" "}
