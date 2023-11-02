@@ -40,13 +40,13 @@ function Products() {
               <div key={product._id} className="">
                 <div className="w-full flex  flex-col m-5 p-2 max-w-sm bg-white border border-gray-200 rounded-md shadow ">
                   <img
-                    className="p-10 rounded-t-lg object-"
+                    className="p-10 rounded-t-lg object-contain h-80 "
                     src={`${API_ENDPOINT}/api/v1/product/product-image/${product._id}`}
                     alt="product image"
                   />
                   <div className="px-5 pb-5 flex justify-between">
                     <div className="text-sm md:text-xl text-start font-semibold tracking-tight text-gray-700 ">
-                      {product?.description}
+                      {product?.name?.substring(0, 50)}
                     </div>
                     <div className="flex items-center justify-end">
                       <span className="text-2xl font-bold text-gray-700 bg-yellow-200 p-2  rounded-md">

@@ -6,6 +6,7 @@ import { BiSolidCategory } from "react-icons/bi";
 import { IoPricetagsSharp } from "react-icons/io5";
 import { FiFilter } from "react-icons/fi";
 import { CgDetailsMore } from "react-icons/cg";
+import { MdCategory } from "react-icons/md";
 
 import {
   Button,
@@ -126,7 +127,7 @@ function Home() {
         <CustomTitle title={"CATEGORIES "} className={"text-2xl md:text-4xl"} />
       </div>
 
-      <div className="flex flex-wrap sm:flex-wrap  gap-4 max-w-screen-xl mt-5  mx-auto justify-start   ">
+      <div className="flex flex-wrap sm:flex-wrap gap-1 sm:gap-2 md:gap-4 max-w-screen-xl mt-5  mx-auto justify-start   ">
         {categories?.map((category) => {
           return (
             <Category
@@ -247,6 +248,10 @@ function Home() {
                       alt="product image"
                     />
                     <div className="px-5 pb-5">
+                      <h5 className="my-2 text-gray-800 flex items-center gap-2 lowercase bg-gray-300 rounded-full w-fit px-5 py-0.5 text-xs">
+                        <BiSolidCategory className="text-gray-500" />{" "}
+                        <p>{product?.category?.name}</p>
+                      </h5>
                       <h5 className="text-lg font-semibold tracking-tight text-gray-800 ">
                         {product?.name}
                       </h5>
