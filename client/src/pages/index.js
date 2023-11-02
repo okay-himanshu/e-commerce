@@ -5,6 +5,7 @@ import AdminDashBoard from "./admin/AdminDashBoard";
 import ProductDetails from "./ProductDetails";
 import CartPage from "./CartPage";
 import Footer from "./Footer";
+import CategoryPage from "./CategoryPage";
 
 // admin
 import CreateCategory from "./admin/CreateCategory";
@@ -32,4 +33,5 @@ export {
   ProductDetails,
   CartPage,
   Footer,
+  CategoryPage,
 };

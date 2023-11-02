@@ -151,7 +151,7 @@ async function getProductsController(req, res) {
     const products = await ProductModel.find({})
       .populate("category")
       .select("-image") // this will avoid image from showing
-      .limit(12) // limit the number of products
+      .limit(30) // limit the number of products
       .sort({ createdAt: -1 }); // sort the products in descending order by createdAt field
 
     return res.send({

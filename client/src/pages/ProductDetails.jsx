@@ -7,6 +7,7 @@ import { BiChevronDown } from "react-icons/bi";
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
 
 import { useAuth } from "../contexts/auth";
+import { CustomTitle } from "../components";
 
 function ProductDetails() {
   const [product, setProduct] = useState({});
@@ -62,8 +63,7 @@ function ProductDetails() {
           />
         </div>
         <div className="text-gray-600 md:w-[30rem] ">
-          <h1 className="font-bold text-4xl capitalize ">{product?.name}</h1>
-          <div className="bg-gray-600 w-20 h-[2px] mt-2 mb-2 rounded-full"></div>
+          <CustomTitle title={product?.name} className={"text-start"} />
           <p className="text-gray-600 text-lg font-medium">
             ₹ {product?.price}
           </p>
