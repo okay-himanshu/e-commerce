@@ -123,10 +123,10 @@ function Home() {
       <Hero />
 
       <div className=" max-w-screen-xl mt-5  mx-auto ">
-        <CustomTitle title={"CATEGORIES "} />
+        <CustomTitle title={"CATEGORIES "} className={"text-2xl md:text-4xl"} />
       </div>
 
-      <div className="flex overflow-x-auto sm:flex-wrap  gap-4 max-w-screen-xl mt-5  mx-auto justify-start   ">
+      <div className="flex flex-wrap sm:flex-wrap  gap-4 max-w-screen-xl mt-5  mx-auto justify-start   ">
         {categories?.map((category) => {
           return (
             <Category
@@ -139,9 +139,12 @@ function Home() {
       </div>
 
       {/* filter */}
-      <div className=" gap-2 flex justify-between  max-w-screen-xl mt-5  mx-auto  ">
+      <div className=" gap-2 flex items-center justify-between  max-w-screen-xl mt-5  mx-auto  ">
         <div className="">
-          <CustomTitle title={"PRODUCTS "} />
+          <CustomTitle
+            title={"PRODUCTS "}
+            className={"text-xl mt-5 md:text-4xl"}
+          />
         </div>
         <div className="flex items-center gap-2 relative">
           <div
