@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { BiCart } from "react-icons/bi";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { IoSadOutline } from "react-icons/io5";
 
 import { Button } from "./index";
 import { useAuth } from "../contexts/auth";
@@ -47,7 +48,7 @@ function Navbar() {
       const res = await axios.get(
         `${API_ENDPOINT}/api/v1/product/product-search/${query}`
       );
-      if (res.data) return setSearch(res.data);
+      if (res.status) return setSearch(res.data);
       toast.error(res.data.message);
     } catch (err) {
       toast.error(err.message);
@@ -145,28 +146,35 @@ function Navbar() {
                     >
                       <div>
                         <h1>
-                          {search?.products?.map((product, index) => (
-                            <div
-                              onClick={() => {
-                                navigator(`/product/${product?.slug}`);
-                                setQuery("");
-                              }}
-                              key={index}
-                            >
-                              <div className="flex justify-between items-center px-4 py-2 hover:bg-slate-100 duration-150">
-                                <div className="flex ">{product?.name}</div>
+                          {search?.products?.length > 0 ? (
+                            search?.products?.map((product, index) => (
+                              <div
+                                onClick={() => {
+                                  navigator(`/product/${product?.slug}`);
+                                  setQuery("");
+                                }}
+                                key={index}
+                              >
+                                <div className="flex justify-between items-center px-4 py-2 hover:bg-slate-100 duration-150">
+                                  <div className="flex ">{product?.name}</div>
 
-                                <div>
-                                  <img
-                                    src={`${API_ENDPOINT}/api/v1/product/product-image/${product._id}`}
-                                    alt="img"
-                                    className="w-10"
-                                  />
+                                  <div>
+                                    <img
+                                      src={`${API_ENDPOINT}/api/v1/product/product-image/${product._id}`}
+                                      alt="img"
+                                      className="w-10"
+                                    />
+                                  </div>
                                 </div>
+                                <hr />
                               </div>
-                              <hr />
+                            ))
+                          ) : (
+                            <div className="flex justify-center gap-3 items-center px-4 py-4 ">
+                              <h1>No result found</h1>
+                              <IoSadOutline size={20} color="gray" />
                             </div>
-                          ))}
+                          )}
                         </h1>
                       </div>
                     </div>
