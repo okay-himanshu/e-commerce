@@ -15,6 +15,7 @@ const {
   productCountController,
   productListController,
   relatedProductController,
+  productSearchController,
 } = require("../controllers/product_controller");
 
 const router = express.Router();
@@ -67,5 +68,8 @@ router.get("/product-list/:page", productListController);
 
 // related products
 router.get("/related-products/:pid/:cid", relatedProductController);
+
+// search
+router.get("/product-search/:query", productSearchController);
 
 module.exports = router;

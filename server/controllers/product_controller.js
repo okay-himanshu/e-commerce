@@ -301,7 +301,6 @@ async function relatedProductController(req, res) {
       _id: { $ne: pid },
     })
       .select("-photo")
-      .limit(3)
       .populate("category");
     res.status(200).send({
       success: true,
@@ -312,6 +311,28 @@ async function relatedProductController(req, res) {
     res.status(400).send({
       success: false,
       message: "Failed while getting related products",
+      error: err.message,
+    });
+  }
+}
+
+async function productSearchController(req, res) {
+  try {
+    const { query } = req.params;
+    console.log(query);
+    const products = await ProductModel.find({
+      name: { $regex: query, $options: "i" },
+    }).select("-photo");
+    res.status(200).send({
+      success: true,
+      message: "Got products successfully",
+      products,
+    });
+  } catch (err) {
+    res.status(400).send({
+      success: false,
+      message: "Failed while getting products",
+      error: err.message,
     });
   }
 }
@@ -327,4 +348,5 @@ module.exports = {
   productCountController,
   productListController,
   relatedProductController,
+  productSearchController,
 };

@@ -1,14 +1,23 @@
 import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { BiCart } from "react-icons/bi";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
 import { Button } from "./index";
 import { useAuth } from "../contexts/auth";
 import { useCart } from "../contexts/cart";
+import { useSearch } from "../contexts/search";
 
 function Navbar() {
   const [toggle, setToggle] = useState(false);
   const [dropDown, setDropDown] = useState(true);
+  const [query, setQuery] = useState("");
+  const [showSearchSuggestion, setShowSearchSuggestion] = useState(false);
+
+  const [auth, setAuth, API_ENDPOINT] = useAuth();
+  const [cart] = useCart();
+  const [search, setSearch] = useSearch();
 
   const handleToggle = () => setToggle(!toggle);
   const handleDropDownMenu = () => setDropDown(!dropDown);
@@ -16,9 +25,6 @@ function Navbar() {
 
   const navigate = useNavigate();
   const navigator = (url) => navigate(url);
-
-  const [auth, setAuth] = useAuth();
-  const [cart] = useCart();
 
   const handleLogout = () => {
     const logoutConfirmation = confirm("do u really want to logout?");
@@ -35,10 +41,32 @@ function Navbar() {
     }
   };
 
+  // search functionality
+  const handleSearch = async (query) => {
+    try {
+      const res = await axios.get(
+        `${API_ENDPOINT}/api/v1/product/product-search/${query}`
+      );
+      if (res.data) return setSearch(res.data);
+      toast.error(res.data.message);
+    } catch (err) {
+      toast.error(err.message);
+    }
+  };
+
   useEffect(() => {
-    const handleResize = () => {
-      handleMenuClick();
-    };
+    const id = setTimeout(() => {
+      if (!query || query.length < 4) return setShowSearchSuggestion(false);
+      setShowSearchSuggestion(true);
+
+      handleSearch(query);
+    }, 1000);
+
+    return () => clearInterval(id);
+  }, [query, setShowSearchSuggestion, showSearchSuggestion]);
+
+  useEffect(() => {
+    const handleResize = () => handleMenuClick();
 
     const handleScroll = () => {
       handleMenuClick();
@@ -81,9 +109,11 @@ function Navbar() {
                 <li className="">
                   <div className="relative  sm:block">
                     <input
-                      className="h-10 outline-none w-full  rounded-md border border-gray-400 bg-white pe-10 ps-4 text-sm shadow-sm sm:w-40 md:w-56"
+                      className="h-10 outline-none w-full  rounded-md border border-gray-400 bg-white pe-10 ps-4 text-sm shadow-sm sm:w-60 md:w-96"
                       type="input"
                       placeholder="Search Items"
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
                     />
 
                     <button
@@ -105,6 +135,41 @@ function Navbar() {
                         />
                       </svg>
                     </button>
+
+                    <div
+                      className={`${
+                        showSearchSuggestion
+                          ? "block transition-all duration-100"
+                          : "hidden  transition-all duration-75"
+                      }  absolute top-14 z-10 w-full  bg-white shadow-2xl rounded-b-md  overflow-y-auto`}
+                    >
+                      <div>
+                        <h1>
+                          {search?.products?.map((product, index) => (
+                            <div
+                              onClick={() => {
+                                navigator(`/product/${product?.slug}`);
+                                setQuery("");
+                              }}
+                              key={index}
+                            >
+                              <div className="flex justify-between items-center px-4 py-2 hover:bg-slate-100 duration-150">
+                                <div className="flex ">{product?.name}</div>
+
+                                <div>
+                                  <img
+                                    src={`${API_ENDPOINT}/api/v1/product/product-image/${product._id}`}
+                                    alt="img"
+                                    className="w-10"
+                                  />
+                                </div>
+                              </div>
+                              <hr />
+                            </div>
+                          ))}
+                        </h1>
+                      </div>
+                    </div>
                   </div>
                 </li>
                 <li>
