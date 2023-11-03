@@ -3,7 +3,7 @@ const Config = require("./env_config");
 
 (module.exports = async function dbConnect() {
   try {
-    const success = await mongoose.connect(Config.DATABASE_URL);
+    const success = await mongoose.connect(process.env.MONGO_URL);
     if (success) {
       console.log("database connected");
     }
