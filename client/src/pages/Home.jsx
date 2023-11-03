@@ -323,7 +323,7 @@ function Home() {
                         />
                         <Button
                           title={"Add to cart"}
-                          className="bgYellow"
+                          className="bgGray"
                           handleClick={() => addToCart(product)}
                         />
                       </div>
@@ -332,7 +332,7 @@ function Home() {
                 </div>
               ))
             ) : (
-              <div className="w-[50rem] flex justify-center items-center   lg:flex lg:flex-wrap lg:justify-center">
+              <div className="w-[50rem] mt-20 mb-20 flex justify-center items-center   lg:flex lg:flex-wrap lg:justify-center">
                 <p>no product found</p>
               </div>
             )}

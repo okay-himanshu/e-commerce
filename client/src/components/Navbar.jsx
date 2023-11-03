@@ -87,10 +87,10 @@ function Navbar() {
           <div className="flex h-16 items-center ">
             <div className="flex-1 md:flex md:items-center md:gap-12">
               <NavLink
-                className=" select-none text-xl font-bold uppercase bg-gradient-to-l from-gray-700 via-gray-900 to-black text-white px-2 py-1"
+                className=" select-none text-base md:text-xl font-bold uppercase bg-gradient-to-l from-gray-700 via-gray-900 to-black text-white px-2 py-1"
                 to="/"
               >
-                TREND_TRIBE
+                TREND TRIBE
               </NavLink>
             </div>
 
@@ -102,89 +102,21 @@ function Navbar() {
                         ? "-translate-y-80  transition-transform "
                         : "translate-y-0 transition-transform top-10  text-center mt-5 z-50   rounded-md   bg-white shadow-lg p-4  w-full"
                     }
-                      sm:translate-y-0 
-                    sm:relative sm:items-center sm:gap-5 sm:flex
+                      md:translate-y-0 
+                    md:relative md:items-center md:gap-5 md:flex
                     transition-all duration-100
                   `}
               >
-                <li className="">
-                  <div className="relative  sm:block">
-                    <input
-                      className="h-10 outline-none w-full  rounded-md border border-gray-400 bg-white pe-10 ps-4 text-sm shadow-sm sm:w-60 md:w-96"
-                      type="input"
-                      placeholder="Search Items"
-                      value={query}
-                      onChange={(e) => setQuery(e.target.value)}
-                    />
-
-                    <button
-                      type="button"
-                      className="absolute end-1 border-l border-gray-300 top-1/2 -translate-y-1/2 rounded-none  p-2 text-gray-600 transition hover:text-gray-700 "
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                        />
-                      </svg>
-                    </button>
-
-                    <div
-                      className={`${
-                        showSearchSuggestion
-                          ? "block transition-all duration-100"
-                          : "hidden  transition-all duration-75"
-                      }  absolute top-14 z-10 w-full  bg-white shadow-2xl rounded-b-md  overflow-y-auto`}
-                    >
-                      <div>
-                        <h1>
-                          {search?.products?.length > 0 ? (
-                            search?.products?.map((product, index) => (
-                              <div
-                                onClick={() => {
-                                  navigator(`/product/${product?.slug}`);
-                                  setQuery("");
-                                }}
-                                key={index}
-                              >
-                                <div className="flex justify-between items-center px-4 py-2 hover:bg-slate-100 duration-150">
-                                  <div className="flex ">{product?.name}</div>
-
-                                  <div>
-                                    <img
-                                      src={`${API_ENDPOINT}/api/v1/product/product-image/${product._id}`}
-                                      alt="img"
-                                      className="w-10"
-                                    />
-                                  </div>
-                                </div>
-                                <hr />
-                              </div>
-                            ))
-                          ) : (
-                            <div className="flex justify-center gap-3 items-center px-4 py-4 ">
-                              <h1>No result found</h1>
-                              <IoSadOutline size={20} color="gray" />
-                            </div>
-                          )}
-                        </h1>
-                      </div>
-                    </div>
-                  </div>
-                </li>
+                <li className=""></li>
                 <li>
                   <NavLink
                     onClick={handleMenuClick}
                     to="/"
-                    className="text-gray-500 transition hover:text-gray-500/75"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-gray-800 underline underline-offset-8  transition "
+                        : "text-gray-600 transition "
+                    }
                   >
                     Home
                   </NavLink>
@@ -192,12 +124,87 @@ function Navbar() {
                 <li>
                   <NavLink
                     onClick={handleMenuClick}
-                    className="text-gray-500 transition hover:text-gray-500/75"
                     to="/category"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-gray-800 underline underline-offset-8 transition "
+                        : "text-gray-600 transition"
+                    }
                   >
                     Category
                   </NavLink>
                 </li>
+                <div className="relative  sm:block">
+                  <input
+                    className="h-10 outline-none w-full  rounded-md border border-gray-400 bg-white pe-10 ps-4 text-sm shadow-sm  md:w-60 lg:w-96"
+                    type="input"
+                    placeholder="Search Items"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                  />
+
+                  <button
+                    type="button"
+                    className="absolute end-1 border-l border-gray-300 top-1/2 -translate-y-1/2 rounded-none  p-2 text-gray-600 transition hover:text-gray-700 "
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      />
+                    </svg>
+                  </button>
+
+                  <div
+                    className={`${
+                      showSearchSuggestion
+                        ? "block transition-all duration-100"
+                        : "hidden  transition-all duration-75"
+                    }  absolute top-14 z-10 w-full  bg-white shadow-2xl rounded-b-md  overflow-y-auto`}
+                  >
+                    <div>
+                      <h1>
+                        {search?.products?.length > 0 ? (
+                          search?.products?.map((product, index) => (
+                            <div
+                              onClick={() => {
+                                navigator(`/product/${product?.slug}`);
+                                setQuery("");
+                              }}
+                              key={index}
+                            >
+                              <div className="flex justify-between items-center px-4 py-2 hover:bg-slate-100 duration-150">
+                                <div className="flex ">{product?.name}</div>
+
+                                <div>
+                                  <img
+                                    src={`${API_ENDPOINT}/api/v1/product/product-image/${product._id}`}
+                                    alt="img"
+                                    className="w-10"
+                                  />
+                                </div>
+                              </div>
+                              <hr />
+                            </div>
+                          ))
+                        ) : (
+                          <div className="flex justify-center gap-3 items-center px-4 py-4 ">
+                            <h1>No result found</h1>
+                            <IoSadOutline size={20} color="gray" />
+                          </div>
+                        )}
+                      </h1>
+                    </div>
+                  </div>
+                </div>
                 <li>
                   <div
                     className=" py-2 ml-2 cursor-pointer"
@@ -206,10 +213,10 @@ function Navbar() {
                       handleMenuClick();
                     }}
                   >
-                    <div className="relative flex justify-center">
+                    <div className="relative flex justify-center hover:text-gray-500">
                       <BiCart size={25} />
                       <div className=" absolute left-1/2 -top-2">
-                        <p className="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-3 text-xs text-white">
+                        <p className="flex h-2 w-2 items-center justify-center rounded-full bg-green-700  p-3 text-xs text-white">
                           {cart?.length}
                         </p>
                       </div>
@@ -220,10 +227,10 @@ function Navbar() {
                   <div className="flex items-center justify-center">
                     {!auth?.user ? (
                       <>
-                        <div className="flex  gap-2 sm:flex sm:gap-4">
+                        <div className="flex  gap-2 sm:flex sm:gap-2">
                           <Button
                             title="Login"
-                            className="bgRed"
+                            className="bgGreen"
                             handleClick={() => navigator("/login")}
                           />
 
@@ -243,7 +250,7 @@ function Navbar() {
                           <div className="inline-flex items-center overflow-hidden rounded-md bg-white">
                             <img
                               alt="Man"
-                              src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+                              src={`https://api.dicebear.com/7.x/bottts-neutral/svg?seed=${auth?.user?.name}`}
                               className="h-10 w-10 rounded-md object-cover"
                             />
                           </div>
@@ -295,29 +302,36 @@ function Navbar() {
                                 Danger Zone
                               </strong>
 
-                              <form method="POST" action="#">
-                                <button
-                                  type="submit"
-                                  className="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-red-700 hover:bg-red-50"
-                                  role="menuitem"
+                              <button
+                                onClick={() =>
+                                  toast("* feature is under development *", {
+                                    icon: "",
+                                    style: {
+                                      borderRadius: "10px",
+                                      background: "#333",
+                                      color: "#fff",
+                                    },
+                                  })
+                                }
+                                className="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-red-700 hover:bg-red-50"
+                                role="menuitem"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  className="h-4 w-4"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
                                 >
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-4 w-4"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                                    />
-                                  </svg>
-                                  Delete Account
-                                </button>
-                              </form>
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                  />
+                                </svg>
+                                Delete Account
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -326,7 +340,7 @@ function Navbar() {
                   </div>
                 </li>
               </ul>
-              <div className="block sm:hidden z-50" onClick={handleToggle}>
+              <div className="block md:hidden z-50" onClick={handleToggle}>
                 <button className="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
