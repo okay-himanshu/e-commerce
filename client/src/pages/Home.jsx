@@ -323,7 +323,7 @@ function Home() {
                         />
                         <Button
                           title={"Add to cart"}
-                          className="bgGray"
+                          className="bgOrange"
                           handleClick={() => addToCart(product)}
                         />
                       </div>
