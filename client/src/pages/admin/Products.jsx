@@ -5,19 +5,23 @@ import toast from "react-hot-toast";
 
 import { AdminMenu } from "../../components";
 import { useAuth } from "../../contexts/auth";
+import { loader } from "../../svgs";
 
 function Products() {
   const [products, setProducts] = useState([]);
   const [, , API_ENDPOINT] = useAuth();
+  const [loading, setLoading] = useState(false);
 
   // Fetching all products
   const fetchProducts = async () => {
     try {
+      setLoading(true);
       const { data } = await axios.get(
         `${API_ENDPOINT}/api/v1/product/get-products`
       );
       if (data.success) {
         setProducts(data.products);
+        setLoading(false);
       }
     } catch (err) {
       toast.error("Something went wrong: " + err.message);
@@ -35,29 +39,33 @@ function Products() {
           <AdminMenu />
         </div>
         <div className="flex flex-wrap w-full max-w-screen-xl">
-          {products.map((product) => (
-            <NavLink to={`/dashboard/admin/product/${product.slug}`}>
-              <div key={product._id} className="">
-                <div className="w-full flex  flex-col m-5 p-2 max-w-sm bg-white border border-gray-200 rounded-md shadow ">
-                  <img
-                    className="p-10 rounded-t-lg object-contain h-80 "
-                    src={`${API_ENDPOINT}/api/v1/product/product-image/${product._id}`}
-                    alt="product image"
-                  />
-                  <div className="px-5 pb-5 flex justify-between">
-                    <div className="text-sm md:text-xl text-start font-semibold tracking-tight text-gray-700 ">
-                      {product?.name?.substring(0, 50)}
-                    </div>
-                    <div className="flex items-center justify-end">
-                      <span className="text-2xl font-bold text-gray-700 bg-yellow-200 p-2  rounded-md">
-                        ${product?.price}
-                      </span>
+          {loading ? (
+            <img src={loader} alt="loading.." className="w-24 mx-auto" />
+          ) : (
+            products.map((product) => (
+              <NavLink to={`/dashboard/admin/product/${product.slug}`}>
+                <div key={product._id} className="">
+                  <div className="w-full flex  flex-col m-5 p-2 max-w-sm bg-white border border-gray-200 rounded-md shadow ">
+                    <img
+                      className="p-10 rounded-t-lg object-contain h-80 "
+                      src={`${API_ENDPOINT}/api/v1/product/product-image/${product._id}`}
+                      alt="product image"
+                    />
+                    <div className="px-5 pb-5 flex justify-between">
+                      <div className="text-sm md:text-xl text-start font-semibold tracking-tight text-gray-700 ">
+                        {product?.name?.substring(0, 50)}
+                      </div>
+                      <div className="flex items-center justify-end">
+                        <span className="text-2xl font-bold text-gray-700 bg-yellow-200 p-2  rounded-md">
+                          ${product?.price}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </NavLink>
-          ))}
+              </NavLink>
+            ))
+          )}
         </div>
       </div>
     </>

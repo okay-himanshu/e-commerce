@@ -8,17 +8,20 @@ import { MdOutlineKeyboardArrowUp } from "react-icons/md";
 
 import { useAuth } from "../contexts/auth";
 import { CustomTitle } from "../components";
+import { loader } from "../svgs";
 
 function ProductDetails() {
   const [product, setProduct] = useState({});
   const [relatedProduct, setRelatedProduct] = useState([]);
   const [viewMore, setViewMore] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [, , API_ENDPOINT] = useAuth();
   const params = useParams();
 
   const getSingleProduct = async () => {
     try {
+      setLoading(true);
       const { data } = await axios.get(
         `${API_ENDPOINT}/api/v1/product/get-single-product/${params.slug}`
       );
@@ -26,10 +29,12 @@ function ProductDetails() {
       if (data) {
         setProduct(data.product);
         getRelatedProduct(data.product._id, data.product.category._id);
+        setLoading(false);
       }
     } catch (err) {
       toast.error("Something went wrong: " + err.message);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -39,11 +44,13 @@ function ProductDetails() {
   //   get related product
   const getRelatedProduct = async (pid, cid) => {
     try {
+      setLoading(true);
       const { data } = await axios.get(
         `${API_ENDPOINT}/api/v1/product/related-products/${pid}/${cid}`
       );
       if (data) {
         setRelatedProduct(data.products);
+        setLoading(<false></false>);
       }
     } catch (err) {}
   };
@@ -138,7 +145,9 @@ function ProductDetails() {
         </h1>
         <div className="overflow-x-scroll flex justify-center ">
           <div className=" flex   justify-start items-center   ">
-            {relatedProduct.length > 0 ? (
+            {loading ? (
+              <img src={loader} alt="loading.." className="w-24 mx-auto" />
+            ) : relatedProduct.length > 0 ? (
               relatedProduct.map((product) => (
                 <div key={product._id} className="">
                   <div className=" w-80  flex  flex-col m-2  max-w-sm bg-white    shadow  border border-gray-300 rounded-xl  ">

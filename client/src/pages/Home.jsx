@@ -6,7 +6,6 @@ import { BiSolidCategory } from "react-icons/bi";
 import { IoPricetagsSharp } from "react-icons/io5";
 import { FiFilter } from "react-icons/fi";
 import { CgDetailsMore } from "react-icons/cg";
-import { MdCategory } from "react-icons/md";
 
 import {
   Button,
@@ -18,6 +17,7 @@ import {
 import { useAuth } from "../contexts/auth";
 import { useCart } from "../contexts/cart";
 import { Footer } from "../pages";
+import { loader } from "../svgs";
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -25,6 +25,7 @@ function Home() {
   const [checked, setChecked] = useState([]);
   const [selectedPrice, setSelectedPrice] = useState([]);
   const [filterSelection, setFilterSelection] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [, , API_ENDPOINT] = useAuth();
   const [cart, setCart] = useCart();
@@ -32,12 +33,14 @@ function Home() {
   const navigate = useNavigate();
 
   const getAllCategories = async () => {
+    setLoading(true);
     try {
       const { data } = await axios.get(
         `${API_ENDPOINT}/api/v1/category/get-all-category`
       );
 
       if (data.success) {
+        setLoading(false);
         setCategories(data.allCategory);
       }
     } catch (err) {
@@ -52,15 +55,18 @@ function Home() {
   // getting all product
   const getAllProducts = async () => {
     try {
+      setLoading(true);
       const { data } = await axios.get(
         `${API_ENDPOINT}/api/v1/product/get-products`
       );
       if (data) {
         setProducts(data.products);
+        setLoading(false);
       }
     } catch (err) {
       toast(err.message);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -128,15 +134,19 @@ function Home() {
       </div>
 
       <div className="flex flex-wrap sm:flex-wrap gap-1 sm:gap-2 md:gap-4 max-w-screen-xl mt-5  mx-auto justify-start   ">
-        {categories?.map((category) => {
-          return (
-            <Category
-              key={category?._id}
-              category={category?.name}
-              className="select-none capitalize cursor-pointer bg-gray-300 border-2 border-gray-300 hover:bg-gray-100  duration-300 text-gray-700  text-sm w-96"
-            />
-          );
-        })}
+        {loading ? (
+          <img src={loader} alt="loading.." className="w-24 mx-auto" />
+        ) : (
+          categories?.map((category) => {
+            return (
+              <Category
+                key={category?._id}
+                category={category?.name}
+                className="select-none capitalize cursor-pointer bg-gray-300 border-2 border-gray-300 hover:bg-gray-100  duration-300 text-gray-700  text-sm w-96"
+              />
+            );
+          })
+        )}
       </div>
 
       {/* filter */}
@@ -238,7 +248,9 @@ function Home() {
       >
         <div className="flex justify-between ">
           <div className=" flex mx-auto  flex-wrap justify-center items-center lg:flex lg:flex-wrap  ">
-            {products.length > 0 ? (
+            {loading ? (
+              <img src={loader} alt="loading..." className="w-24 mx-auto" />
+            ) : products.length > 0 ? (
               products.map((product) => (
                 <div key={product._id} className="">
                   <div className=" w-80  flex  flex-col m-2  max-w-sm bg-white    shadow  border border-gray-300 rounded-xl  ">
